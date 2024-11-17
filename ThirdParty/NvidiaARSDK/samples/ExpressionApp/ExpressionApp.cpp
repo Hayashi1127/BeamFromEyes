@@ -257,8 +257,10 @@ static int StringToFourcc(const std::string &str) {
 static int ParseMyArgs(int argc, char **argv) {
   // query NVAR_MODEL_DIR environment variable first before checking the command line arguments
   // const char* modelPath = getenv("NVAR_MODEL_DIR");
-  const char* modelPath = "C:\\Program Files\\NVIDIA Corporation\\NVIDIA AR SDK\\models";
-
+  char* modelPath;
+  size_t len;
+  errno_t err = _dupenv_s(&modelPath, &len, "NVAR_MODEL_DIR");
+  
   if (modelPath) {
     FLAG_modelDir = modelPath;
   }
@@ -563,7 +565,8 @@ NvCV_Status App::setInputCamera(int index, const std::string& resStr) {
     return NvFromAppErr(APP_ERR_OPEN);
   if (!resStr.empty()) {
     int n, width, height;
-    n = scanf_s(resStr.c_str(), "%d%*[xX]%d", &width, &height);
+    // n = scanf(resStr.c_str(), "%d%*[xX]%d", &width, &height);
+	n = scanf_s(resStr.c_str(), "%d%*[xX]%d", &width, &height);
     switch (n) {
       case 2:
         break;  // We have read both width and height
@@ -1277,13 +1280,14 @@ int ExpressionApp(){
   NvCV_Status err = NVCV_SUCCESS;
   App app;
   int nErrs;
+  char* argv;
 
-  //if (0 != (nErrs = ParseMyArgs(argc, argv))) {
-  //  if (HELP_REQUESTED == nErrs)          // If it was  a call for help ...
-  //    BAIL(err, NVCV_SUCCESS);            // ... just exit quietly
-  //  printf("ERROR: argument syntax\n");
-  //  BAIL(err, NVCV_ERR_PARSE);
-  //}
+  if (0 != (nErrs = ParseMyArgs(1, &argv))) {
+    if (HELP_REQUESTED == nErrs)          // If it was  a call for help ...
+      BAIL(err, NVCV_SUCCESS);            // ... just exit quietly
+    printf("ERROR: argument syntax\n");
+    BAIL(err, NVCV_ERR_PARSE);
+  }
 
   if (FLAG_fitModel.empty())
     FLAG_fitModel = DEFAULT_FACE_MODEL;
