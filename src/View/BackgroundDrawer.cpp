@@ -20,13 +20,11 @@ namespace BeamForEyes::View
 
 	void BackgroundDrawer::Draw()
 	{
-		Mesh meshes{ backgroundObjectPtr->GetBackObstacleMesh() };
 		Array<Vec3> positions{ backgroundObjectPtr->GetBackObstaclePositions() };
 		Quaternion rotation{ backgroundObjectPtr->GetBackObstacleRotation() };
-		PhongMaterial material{ backgroundObjectPtr->GetbackObstacleMaterial() };
 		for (int i = 0; i < backgroundObjectPtr->GetBackObstacleNum(); i++)
 		{
-			meshes.draw(positions.at(i), rotation, material);
+			ModelDatabase::backObstacleModel.draw(positions.at(i), rotation, ModelDatabase::backObstacleMaterial);
 		}
 	}
 }
