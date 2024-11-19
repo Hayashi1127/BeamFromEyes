@@ -24,9 +24,6 @@ namespace BeamForEyes::Model
 		/// @brief コントローラ―の入力を受け取るためのクラスへのポインタ
 		const ControllerManager* controllerManagerPtr;
 
-		/// @brief モデルデータベース
-		const ModelDatabase modelDatabase;
-
 		/// @brief 背景描画に必要なクラスへのポインタ
 		BackgroundObject* backgroundObjectPtr;
 
@@ -40,7 +37,6 @@ namespace BeamForEyes::Model
 		~ModelManager();
 		const BackgroundObject* GetBackgroundObjectPtr() const;
 		const Array<Obstacle>* GetObstaclePtr() const;
-		const ModelDatabase* GetModelDatabasePtr() const;
 		void Update();
 	};
 }
