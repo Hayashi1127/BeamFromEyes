@@ -33,8 +33,8 @@ namespace BeamForEyes::View
 		modelManagerPtr = model;
 		controllerManagerPtr = controller;
 
-		backgroundDrawerPtr = new BackgroundDrawer(modelManagerPtr->GetBackgroundObjectPtr(), modelManagerPtr->GetModelDatabasePtr());
-		obstacleDrawerPtr = new ObstacleDrawer(modelManagerPtr->GetObstaclePtr(), modelManagerPtr->GetModelDatabasePtr());
+		backgroundDrawerPtr = new BackgroundDrawer(modelManagerPtr->GetBackgroundObjectPtr(), &modelDatabase);
+		obstacleDrawerPtr = new ObstacleDrawer(modelManagerPtr->GetObstaclePtr(), &modelDatabase);
 		postprocessPtr = new PostProcess(&windowSize);
 
 		Window::Resize(windowSize);

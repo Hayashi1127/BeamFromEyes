@@ -18,11 +18,6 @@ namespace BeamForEyes::Model
 		return &obstacles;
 	}
 
-	const ModelDatabase* ModelManager::GetModelDatabasePtr() const
-	{
-		return &modelDatabase;
-	}
-
 	void ModelManager::Update()
 	{
 		// 自陣に到達した敵について、プレイヤーへの攻撃後削除
