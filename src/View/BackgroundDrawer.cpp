@@ -16,7 +16,7 @@ namespace BeamForEyes::View
 	BackgroundDrawer::BackgroundDrawer(const BackgroundObject* ptr, const ModelDatabase* ptr2)
 	{
 		backgroundObjectPtr = ptr;
-		modelDatabasefPtr = ptr2;
+		modelDatabasePtr = ptr2;
 	}
 
 	void BackgroundDrawer::Draw()
@@ -25,7 +25,7 @@ namespace BeamForEyes::View
 		Quaternion rotation{ backgroundObjectPtr->GetBackObstacleRotation() };
 		for (int i = 0; i < backgroundObjectPtr->GetBackObstacleNum(); i++)
 		{
-			modelDatabasefPtr->backObstacleModel.draw(positions.at(i), rotation, modelDatabasefPtr->backObstacleMaterial);
+			modelDatabasePtr->backObstacleModel.draw(positions.at(i), rotation, modelDatabasePtr->backObstacleMaterial);
 		}
 	}
 }
