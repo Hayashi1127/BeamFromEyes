@@ -8,10 +8,14 @@ namespace BeamForEyes::Model
 	{
 	private:
 	public:
+		/// @brief 背景オブジェクトのメッシュ
 		const Mesh backObstacleModel{ MeshData::TwoSidedPlane(1) };
-		const s3d::Model obstacleModel{ U"../ThirdParty/Quaternius_UltimateSpaceKit/Environment/OBJ/Planet_5.obj" };
 
+		/// @brief 背景オブジェクトのマテリアル
 		PhongMaterial backObstacleMaterial;
+
+		/// @brief 障害物のモデルデータ
+		const s3d::Model obstacleModel{ U"../ThirdParty/Quaternius_UltimateSpaceKit/Environment/OBJ/Planet_5.obj" };
 
 		ModelDatabase();
 		~ModelDatabase();
