@@ -17,7 +17,7 @@ namespace BeamForEyes::View
 		const ModelDatabase* modelDatabasePtr;
 
 	public:
-		ObstacleDrawer(const Array<Obstacle>* ptr, const ModelDatabase* ptr2);
+		ObstacleDrawer(const Array<Obstacle>* objPtr, const ModelDatabase* databasePtr);
 		~ObstacleDrawer();
 		void Draw();
 	};

@@ -13,10 +13,10 @@ namespace BeamForEyes::View
 		return backgroundObjectPtr->GetBackgroundColor();
 	}
 
-	BackgroundDrawer::BackgroundDrawer(const BackgroundObject* ptr, const ModelDatabase* ptr2)
+	BackgroundDrawer::BackgroundDrawer(const BackgroundObject* objPtr, const ModelDatabase* databasePtr)
 	{
-		backgroundObjectPtr = ptr;
-		modelDatabasePtr = ptr2;
+		backgroundObjectPtr = objPtr;
+		modelDatabasePtr = databasePtr;
 	}
 
 	void BackgroundDrawer::Draw()

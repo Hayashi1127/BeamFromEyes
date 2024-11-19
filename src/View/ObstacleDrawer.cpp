@@ -19,10 +19,10 @@ namespace BeamForEyes::View
 		}
 	}
 
-	ObstacleDrawer::ObstacleDrawer(const Array<Obstacle>* ptr, const ModelDatabase* ptr2)
+	ObstacleDrawer::ObstacleDrawer(const Array<Obstacle>* objPtr, const ModelDatabase* databasePtr)
 	{
-		obstaclePtr = ptr;
-		modelDatabasePtr = ptr2;
+		obstaclePtr = objPtr;
+		modelDatabasePtr = databasePtr;
 	}
 
 	ObstacleDrawer::~ObstacleDrawer()
