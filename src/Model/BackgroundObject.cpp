@@ -35,16 +35,6 @@ namespace BeamForEyes::Model
 		return rotation;
 	}
 
-	Mesh BackgroundObject::GetBackObstacleMesh() const
-	{
-		return backObstacleMesh;
-	}
-
-	PhongMaterial BackgroundObject::GetbackObstacleMaterial() const
-	{
-		return backObstacleMaterial;
-	}
-
 	BackgroundObject::BackgroundObject()
 	{
 		// オブジェクトランダム生成
@@ -53,11 +43,6 @@ namespace BeamForEyes::Model
 		{
 			positions.push_back(Vec3{ Random(-16*25, 16*25), Random(-9*25, 9*25), Random(500, 750) });
 		}
-
-		// マテリアル設定
-		backObstacleMaterial.ambientColor = ColorF{ 1.0 };
-		backObstacleMaterial.diffuseColor = ColorF{ 0.0 };
-		backObstacleMaterial.emissionColor = Linear::Palette::Ghostwhite;
 	}
 
 	BackgroundObject::~BackgroundObject()
