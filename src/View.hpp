@@ -21,6 +21,8 @@ namespace BeamForEyes::View
 
 		BackgroundDrawer* backgroundDrawerPtr = nullptr;
 
+		ObstacleDrawer* obstacleDrawerPtr = nullptr;
+
 		PostProcess* postprocessPtr = nullptr;
 
 		const Size windowSize = Size{ 1280, 720 };

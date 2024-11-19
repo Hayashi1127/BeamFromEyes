@@ -15,6 +15,7 @@ namespace BeamForEyes::View
 		const ScopedRenderTarget3D target{ renderTexture.clear(backgroundDrawerPtr->GetBackgroundColor()) };
 
 		backgroundDrawerPtr->Draw();
+		obstacleDrawerPtr->Draw();
 
 		// 3D -> 2D変換
 		Graphics3D::Flush();
@@ -32,7 +33,8 @@ namespace BeamForEyes::View
 		modelManagerPtr = model;
 		controllerManagerPtr = controller;
 
-		backgroundDrawerPtr = new BackgroundDrawer(modelManagerPtr->GetBackgroundObjectPtr());
+		backgroundDrawerPtr = new BackgroundDrawer(modelManagerPtr->GetBackgroundObjectPtr(), modelManagerPtr->GetModelDatabasePtr());
+		obstacleDrawerPtr = new ObstacleDrawer(modelManagerPtr->GetObstaclePtr(), modelManagerPtr->GetModelDatabasePtr());
 		postprocessPtr = new PostProcess(&windowSize);
 
 		Window::Resize(windowSize);

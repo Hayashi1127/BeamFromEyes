@@ -12,9 +12,10 @@ namespace BeamForEyes::View
 	{
 	private:
 		const BackgroundObject* backgroundObjectPtr;
+		const ModelDatabase* modelDatabasefPtr;
 
 	public:
-		BackgroundDrawer(const BackgroundObject* ptr);
+		BackgroundDrawer(const BackgroundObject* ptr, const ModelDatabase* ptr2);
 		void Draw();
 		ColorF GetBackgroundColor() const;
 	};
