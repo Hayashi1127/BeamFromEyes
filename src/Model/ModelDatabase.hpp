@@ -6,11 +6,12 @@ namespace BeamForEyes::Model
 {
 	class ModelDatabase
 	{
+	private:
 	public:
-		static const Mesh backObstacleModel;
-		static const s3d::Model obstacleModel;
+		const Mesh backObstacleModel{ MeshData::TwoSidedPlane(1) };
+		const s3d::Model obstacleModel{ U"../ThirdParty/Quaternius_UltimateSpaceKit/Environment/OBJ/Planet_5.obj" };
 
-		static PhongMaterial backObstacleMaterial;
+		PhongMaterial backObstacleMaterial;
 
 		ModelDatabase();
 		~ModelDatabase();
