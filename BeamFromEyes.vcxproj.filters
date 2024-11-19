@@ -243,6 +243,9 @@
     <ClCompile Include="src\Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Model\ModelDatabase.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -979,6 +982,9 @@
     </ClInclude>
     <ClInclude Include="src\View\UIDrawer.hpp">
       <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model\ModelDatabase.hpp">
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
