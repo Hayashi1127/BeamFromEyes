@@ -25,8 +25,17 @@ namespace BeamForEyes::Model
 		/// @brief 障害物の位置
 		Vec3 position;
 
+		/// @brief 障害物の移動の速さ、正確には更新のたびにpositionに加算する量
+		Vec3 moveSpeed;
+
 		/// @brief 障害物の回転
 		Quaternion rotation;
+
+		/// @brief 障害物の回転の速さ、正確には更新のたびにrotationに加算する量
+		float rotationSpeed{ 0.01 };
+
+		/// @brief 障害物の回転軸
+		Vec3 rotationAxis;
 	public:
 		Obstacle();
 		Obstacle(Vec3 pos);

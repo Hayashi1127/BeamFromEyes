@@ -32,12 +32,16 @@ namespace BeamForEyes::Model
 
 	void Obstacle::Update()
 	{
-		position -= Vec3{ 0, 0, 1 };
+		position -= moveSpeed;
+		rotation *= Quaternion::RotationAxis(rotationAxis, rotationSpeed);
 	}
 
 	Obstacle::Obstacle()
 	{
 		position = Vec3{ Random(-xPosLim, xPosLim), Random(-yPosLim, yPosLim), zPosLim };
+
+		moveSpeed = Vec3{ 0, 0, Random(0.5, 1.5) };
+		rotationAxis = Vec3{ RandomVec2(), 0};
 	}
 
 	Obstacle::Obstacle(const Vec3 pos)
