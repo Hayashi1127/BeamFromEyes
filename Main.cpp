@@ -20,6 +20,7 @@ void Main()
 
 	while (System::Update())
 	{
+		model.Update();
 		view.Update();
 	}
 }

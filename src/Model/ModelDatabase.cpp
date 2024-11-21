@@ -1,16 +1,16 @@
 ﻿# pragma once
 
+# include <stdio.h>
+# include <Siv3D.hpp>
+
 # include "./Model/ModelDatabase.hpp"
-
-const Mesh backObstacleModel{ MeshData::TwoSidedPlane(1) };
-const s3d::Model obstacleModel{ U"./ThirdParty/Quaternius_UltimateSpaceKit/Environment/OBJ/Planet_4.obj" };
-
-PhongMaterial backObstacleModel;
 
 namespace BeamForEyes::Model
 {
 	ModelDatabase::ModelDatabase()
 	{
+		Mesh backObstacleModel{ MeshData::TwoSidedPlane(1) };
+		
 		s3d::Model::RegisterDiffuseTextures(obstacleModel, TextureDesc::MippedSRGB);
 
 		// マテリアル設定
