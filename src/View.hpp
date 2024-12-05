@@ -17,7 +17,6 @@ namespace BeamForEyes::View
 	{
 	private:
 		const ModelManager* modelManagerPtr;
-		const ControllerManager* controllerManagerPtr;
 
 		/// @brief モデルデータベース
 		const ModelDatabase modelDatabase;
@@ -36,8 +35,10 @@ namespace BeamForEyes::View
 		/// @brief ゲーム画面のメインカメラ
 		BasicCamera3D mainCamera{ windowSize, 30_deg, Vec3{ 0, 0, -10} };
 
+		/// @brief スタート(1)、ゲーム(2)、リザルト(3)
+		int8 SceneFlag = 0;
 	public:
-		ViewManager(const ModelManager* model, const ControllerManager* controller);
+		ViewManager(const ModelManager* model);
 		~ViewManager();
 		void Update();
 	};

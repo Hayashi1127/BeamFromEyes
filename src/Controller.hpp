@@ -10,5 +10,8 @@ namespace BeamForEyes::Controller
 	{
 	private:
 	public:
+		ControllerManager();
+		~ControllerManager();
+		void Update();
 	};
 }

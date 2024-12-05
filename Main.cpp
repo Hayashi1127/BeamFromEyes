@@ -16,10 +16,11 @@ void Main()
 
 	ControllerManager controller;
 	ModelManager model{ &controller };
-	ViewManager view{ &model, &controller };
+	ViewManager view{ &model };
 
 	while (System::Update())
 	{
+		controller.Update();
 		model.Update();
 		view.Update();
 	}

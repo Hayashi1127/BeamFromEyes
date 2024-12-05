@@ -28,10 +28,9 @@ namespace BeamForEyes::View
 		renderTexture.draw();
 	}
 
-	ViewManager::ViewManager(const ModelManager* model, const ControllerManager* controller)
+	ViewManager::ViewManager(const ModelManager* model)
 	{
 		modelManagerPtr = model;
-		controllerManagerPtr = controller;
 
 		backgroundDrawerPtr = new BackgroundDrawer(modelManagerPtr->GetBackgroundObjectPtr(), &modelDatabase);
 		obstacleDrawerPtr = new ObstacleDrawer(modelManagerPtr->GetObstaclePtr(), &modelDatabase);
