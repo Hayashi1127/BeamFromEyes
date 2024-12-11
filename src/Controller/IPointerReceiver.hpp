@@ -7,8 +7,8 @@ namespace BeamForEyes::Controller
 	class IPointerReceiver
 	{
 	public:
-		virtual void Update() = 0;
+		virtual void Update() = 0; 
 		virtual Vec2 GetPointerPosition() = 0;
-		virtual bool GetClick() = 0;
+		virtual bool GetIsPressed() = 0;
 	};
 }
