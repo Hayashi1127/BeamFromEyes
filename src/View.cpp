@@ -44,5 +44,8 @@ namespace BeamForEyes::View
 
 	ViewManager::~ViewManager()
 	{
+		delete(backgroundDrawerPtr);
+		delete(obstacleDrawerPtr);
+		delete(postprocessPtr);
 	}
 }
