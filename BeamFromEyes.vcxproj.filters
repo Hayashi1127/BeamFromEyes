@@ -246,6 +246,9 @@
     <ClCompile Include="src\Model\ModelDatabase.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="src\Controller\MousePointerReceiver.cpp">
+      <Filter>Header Files\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -950,7 +953,7 @@
     <ClInclude Include="src\Controller\EyetrackingReceiver.hpp">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="src\Controller\IReceiver.hpp">
+    <ClInclude Include="src\Controller\IPointerReceiver.hpp">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
     <ClInclude Include="src\Controller\KeyboardReceiver.hpp">
@@ -985,6 +988,9 @@
     </ClInclude>
     <ClInclude Include="src\Model\ModelDatabase.hpp">
       <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Controller\MousePointerReceiver.hpp">
+      <Filter>Header Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

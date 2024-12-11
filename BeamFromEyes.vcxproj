@@ -143,6 +143,7 @@
     <ClCompile Include="src\Controller.cpp" />
     <ClCompile Include="src\Controller\EyetrackingReceiver.cpp" />
     <ClCompile Include="src\Controller\KeyboardReceiver.cpp" />
+    <ClCompile Include="src\Controller\MousePointerReceiver.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\Model\BackgroundObject.cpp" />
     <ClCompile Include="src\Model\ModelDatabase.cpp" />
@@ -375,8 +376,9 @@
   <ItemGroup>
     <ClInclude Include="src\Controller.hpp" />
     <ClInclude Include="src\Controller\EyetrackingReceiver.hpp" />
-    <ClInclude Include="src\Controller\IReceiver.hpp" />
+    <ClInclude Include="src\Controller\IPointerReceiver.hpp" />
     <ClInclude Include="src\Controller\KeyboardReceiver.hpp" />
+    <ClInclude Include="src\Controller\MousePointerReceiver.hpp" />
     <ClInclude Include="src\Model.hpp" />
     <ClInclude Include="src\Model\BackgroundObject.hpp" />
     <ClInclude Include="src\Model\ModelDatabase.hpp" />
