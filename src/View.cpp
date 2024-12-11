@@ -30,14 +30,16 @@ namespace BeamForEyes::View
 
 	ViewManager::ViewManager(const ModelManager* model)
 	{
+		monitorInfos = System::EnumerateMonitors();
+		windowSize = System::GetCurrentMonitor().fullscreenResolution;
+		Window::SetFullscreen(true);
+		Window::SetTitle(U"Beam For Eyes");
+
 		modelManagerPtr = model;
 
 		backgroundDrawerPtr = new BackgroundDrawer(modelManagerPtr->GetBackgroundObjectPtr(), &modelDatabase);
 		obstacleDrawerPtr = new ObstacleDrawer(modelManagerPtr->GetObstaclePtr(), &modelDatabase);
 		postprocessPtr = new PostProcess(&windowSize);
-
-		Window::Resize(windowSize);
-		Window::SetTitle(U"Beam For Eyes");
 	}
 
 	ViewManager::~ViewManager()
