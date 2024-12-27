@@ -8,9 +8,9 @@
 
 # include <Controller.hpp>
 
-using namespace BeamForEyes::Controller;
+using namespace BeamFromEyes::Controller;
 
-namespace BeamForEyes::Model
+namespace BeamFromEyes::Model
 {
 	class ModelManager
 	{
