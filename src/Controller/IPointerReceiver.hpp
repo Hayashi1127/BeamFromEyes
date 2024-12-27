@@ -2,7 +2,7 @@
 
 # include <Siv3D.hpp>
 
-namespace BeamForEyes::Controller
+namespace BeamFromEyes::Controller
 {
 	class IPointerReceiver
 	{
