@@ -4,7 +4,7 @@
 
 # include "MousePointerReceiver.hpp"
 
-namespace BeamForEyes::Controller
+namespace BeamFromEyes::Controller
 {
 	void MousePointerReceiver::Update()
 	{
