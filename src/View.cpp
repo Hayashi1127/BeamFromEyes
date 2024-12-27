@@ -4,10 +4,10 @@
 # include <View.hpp>
 # include <Controller.hpp>
 
-using namespace BeamForEyes::Controller;
-using namespace BeamForEyes::Model;
+using namespace BeamFromEyes::Controller;
+using namespace BeamFromEyes::Model;
 
-namespace BeamForEyes::View
+namespace BeamFromEyes::View
 {
 	void ViewManager::Update()
 	{
