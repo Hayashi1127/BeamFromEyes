@@ -2,7 +2,7 @@
 
 # include <Siv3D.hpp>
 
-namespace BeamForEyes::View
+namespace BeamFromEyes::View
 {
 	class PostProcess
 	{
