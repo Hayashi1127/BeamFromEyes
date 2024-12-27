@@ -7,9 +7,9 @@
 # include "./Model/Obstacle.hpp"
 # include "./View/ObstacleDrawer.hpp"
 
-using namespace BeamForEyes::Model;
+using namespace BeamFromEyes::Model;
 
-namespace BeamForEyes::View
+namespace BeamFromEyes::View
 {
 	void ObstacleDrawer::Draw()
 	{

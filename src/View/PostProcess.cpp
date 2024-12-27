@@ -2,7 +2,7 @@
 
 # include "./View/PostProcess.hpp"
 
-namespace BeamForEyes::View
+namespace BeamFromEyes::View
 {
 	void PostProcess::Process(const MSRenderTexture renderTexture)
 	{
