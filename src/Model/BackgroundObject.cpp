@@ -3,7 +3,7 @@
 
 # include "./Model/BackgroundObject.hpp"
 
-namespace BeamForEyes::Model
+namespace BeamFromEyes::Model
 {
 	ColorF BackgroundObject::GetBackgroundColor() const
 	{

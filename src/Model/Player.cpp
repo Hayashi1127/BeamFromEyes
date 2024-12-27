@@ -3,7 +3,7 @@
 
 # include "./Model/Player.hpp"
 
-namespace BeamForEyes::Model
+namespace BeamFromEyes::Model
 {
 	void Player::ReceiveDamage(const int32 enemyAtp)
 	{
