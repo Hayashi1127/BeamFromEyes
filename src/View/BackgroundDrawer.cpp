@@ -4,9 +4,9 @@
 
 # include "./View/BackgroundDrawer.hpp"
 
-using namespace BeamForEyes::Model;
+using namespace BeamFromEyes::Model;
 
-namespace BeamForEyes::View
+namespace BeamFromEyes::View
 {
 	ColorF BackgroundDrawer::GetBackgroundColor() const
 	{

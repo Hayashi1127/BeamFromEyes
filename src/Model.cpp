@@ -4,9 +4,9 @@
 # include <Model.hpp>
 # include <Controller.hpp>
 
-using namespace BeamForEyes::Controller;
+using namespace BeamFromEyes::Controller;
 
-namespace BeamForEyes::Model
+namespace BeamFromEyes::Model
 {
 	const BackgroundObject* ModelManager::GetBackgroundObjectPtr() const
 	{

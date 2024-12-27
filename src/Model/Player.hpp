@@ -1,7 +1,7 @@
 ﻿# pragma once
 # include <Siv3D.hpp>
 
-namespace BeamForEyes::Model
+namespace BeamFromEyes::Model
 {
 	class Player
 	{

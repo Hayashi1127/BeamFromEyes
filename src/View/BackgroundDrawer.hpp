@@ -4,9 +4,9 @@
 
 # include <Model.hpp>
 
-using namespace BeamForEyes::Model;
+using namespace BeamFromEyes::Model;
 
-namespace BeamForEyes::View
+namespace BeamFromEyes::View
 {
 	class BackgroundDrawer
 	{

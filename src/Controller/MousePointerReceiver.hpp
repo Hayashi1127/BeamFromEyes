@@ -4,7 +4,7 @@
 
 # include "IPointerReceiver.hpp"
 
-namespace BeamForEyes::Controller
+namespace BeamFromEyes::Controller
 {
 	class MousePointerReceiver : public IPointerReceiver
 	{

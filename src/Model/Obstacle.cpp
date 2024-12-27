@@ -3,7 +3,7 @@
 
 # include "./Model/Obstacle.hpp"
 
-namespace BeamForEyes::Model
+namespace BeamFromEyes::Model
 {
 	Vec3 Obstacle::GetPosition() const
 	{

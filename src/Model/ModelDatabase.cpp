@@ -5,7 +5,7 @@
 
 # include "./Model/ModelDatabase.hpp"
 
-namespace BeamForEyes::Model
+namespace BeamFromEyes::Model
 {
 	ModelDatabase::ModelDatabase()
 	{

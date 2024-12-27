@@ -5,7 +5,7 @@
 # include "./Controller/IPointerReceiver.hpp"
 # include "./Controller/KeyboardReceiver.hpp"
 
-namespace BeamForEyes::Controller
+namespace BeamFromEyes::Controller
 {
 	class ControllerManager
 	{
