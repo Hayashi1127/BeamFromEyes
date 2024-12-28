@@ -26,6 +26,16 @@ namespace BeamFromEyes::Model
 		eyeMoisture += moisture;
 	}
 
+	int32 Player::GetHP() const
+	{
+		return hp;
+	}
+
+	int32 Player::GetMoisture() const
+	{
+		return eyeMoisture;
+	}
+
 	Player::Player()
 	{
 

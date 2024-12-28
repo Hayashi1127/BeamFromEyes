@@ -247,7 +247,10 @@
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="src\Controller\MousePointerReceiver.cpp">
-      <Filter>Header Files\Controller</Filter>
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Model\UIState.cpp">
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -991,6 +994,9 @@
     </ClInclude>
     <ClInclude Include="src\Controller\MousePointerReceiver.hpp">
       <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model\UIState.hpp">
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
