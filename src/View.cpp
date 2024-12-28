@@ -26,6 +26,8 @@ namespace BeamFromEyes::View
 		// postprocessPtr->Process(renderTexture);
 
 		renderTexture.draw();
+
+		uiDrawerPtr->Draw();
 	}
 
 	ViewManager::ViewManager(const ModelManager* model)
@@ -39,6 +41,7 @@ namespace BeamFromEyes::View
 
 		backgroundDrawerPtr = new BackgroundDrawer(modelManagerPtr->GetBackgroundObjectPtr(), &modelDatabase);
 		obstacleDrawerPtr = new ObstacleDrawer(modelManagerPtr->GetObstaclePtr(), &modelDatabase);
+		uiDrawerPtr = new UIDrawer(modelManagerPtr->GetUIStatePtr(), &modelDatabase, &windowSize);
 		postprocessPtr = new PostProcess(&windowSize);
 	}
 
@@ -46,6 +49,7 @@ namespace BeamFromEyes::View
 	{
 		delete(backgroundDrawerPtr);
 		delete(obstacleDrawerPtr);
+		delete(uiDrawerPtr);
 		delete(postprocessPtr);
 	}
 }

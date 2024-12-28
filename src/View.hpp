@@ -23,6 +23,7 @@ namespace BeamFromEyes::View
 		// 各描画用クラスへのポインタ
 		BackgroundDrawer* backgroundDrawerPtr = nullptr;
 		ObstacleDrawer* obstacleDrawerPtr = nullptr;
+		UIDrawer* uiDrawerPtr = nullptr;
 		PostProcess* postprocessPtr = nullptr;
 
 		/// @brief ゲーム画面の大きさ
