@@ -34,5 +34,9 @@ namespace BeamFromEyes::Model
 		/// @brief 目の潤いが回復する
 		/// @return 回復する渇き度合
 		void RecoveryMoisture(const int32 moisture);
+
+		int32 GetHP() const;
+
+		int32 GetMoisture() const;
 	};
 }
