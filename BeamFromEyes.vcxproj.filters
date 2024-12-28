@@ -166,6 +166,9 @@
     <Filter Include="Source Files\Controller">
       <UniqueIdentifier>{08fb320e-aa46-4150-97f0-33ebae0aef42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\img">
+      <UniqueIdentifier>{a3728ca8-96bf-4258-b637-aaa21aab0660}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -325,6 +328,12 @@
     </Image>
     <Image Include="App\example\obj\siv3d-kun-eye.png">
       <Filter>Resource Files\example\obj</Filter>
+    </Image>
+    <Image Include="img\UnderUI.png">
+      <Filter>Source Files\img</Filter>
+    </Image>
+    <Image Include="img\UppderUI.png">
+      <Filter>Source Files\img</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
