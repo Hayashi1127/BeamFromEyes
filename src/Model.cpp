@@ -18,6 +18,11 @@ namespace BeamFromEyes::Model
 		return &obstacles;
 	}
 
+	const UIState* ModelManager::GetUIStatePtr() const
+	{
+		return uiStatePtr;
+	}
+
 	void ModelManager::Update()
 	{
 		// 自陣に到達した敵について、プレイヤーへの攻撃後削除
@@ -48,6 +53,7 @@ namespace BeamFromEyes::Model
 
 		backgroundObjectPtr = new BackgroundObject();
 		playerPtr = new Player();
+		uiStatePtr = new UIState(playerPtr);
 
 		obstacles.clear();
 	}
@@ -55,6 +61,7 @@ namespace BeamFromEyes::Model
 	ModelManager::~ModelManager()
 	{
 		delete(backgroundObjectPtr);
+		delete(uiStatePtr);
 		delete(playerPtr);
 	}
 }
