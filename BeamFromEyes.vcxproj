@@ -149,6 +149,7 @@
     <ClCompile Include="src\Model\ModelDatabase.cpp" />
     <ClCompile Include="src\Model\Obstacle.cpp" />
     <ClCompile Include="src\Model\Player.cpp" />
+    <ClCompile Include="src\Model\UIState.cpp" />
     <ClCompile Include="src\View.cpp" />
     <ClCompile Include="src\View\BackgroundDrawer.cpp" />
     <ClCompile Include="src\View\ObstacleDrawer.cpp" />
@@ -384,6 +385,7 @@
     <ClInclude Include="src\Model\ModelDatabase.hpp" />
     <ClInclude Include="src\Model\Obstacle.hpp" />
     <ClInclude Include="src\Model\Player.hpp" />
+    <ClInclude Include="src\Model\UIState.hpp" />
     <ClInclude Include="src\View.hpp" />
     <ClInclude Include="src\View\BackgroundDrawer.hpp" />
     <ClInclude Include="src\View\ObstacleDrawer.hpp" />
