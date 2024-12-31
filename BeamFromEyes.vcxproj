@@ -146,9 +146,12 @@
     <ClCompile Include="src\Controller\MousePointerReceiver.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\Model\BackgroundObject.cpp" />
+    <ClCompile Include="src\Model\CircleProgressBar.cpp" />
+    <ClCompile Include="src\Model\CustomShapeProgressBar.cpp" />
     <ClCompile Include="src\Model\ModelDatabase.cpp" />
     <ClCompile Include="src\Model\Obstacle.cpp" />
     <ClCompile Include="src\Model\Player.cpp" />
+    <ClCompile Include="src\Model\ProgressBar.cpp" />
     <ClCompile Include="src\Model\UIState.cpp" />
     <ClCompile Include="src\View.cpp" />
     <ClCompile Include="src\View\BackgroundDrawer.cpp" />
@@ -384,9 +387,12 @@
     <ClInclude Include="src\Controller\MousePointerReceiver.hpp" />
     <ClInclude Include="src\Model.hpp" />
     <ClInclude Include="src\Model\BackgroundObject.hpp" />
+    <ClInclude Include="src\Model\CircleProgressBar.hpp" />
+    <ClInclude Include="src\Model\CustomShapeProgressbar.hpp" />
     <ClInclude Include="src\Model\ModelDatabase.hpp" />
     <ClInclude Include="src\Model\Obstacle.hpp" />
     <ClInclude Include="src\Model\Player.hpp" />
+    <ClInclude Include="src\Model\ProgressBar.hpp" />
     <ClInclude Include="src\Model\UIState.hpp" />
     <ClInclude Include="src\View.hpp" />
     <ClInclude Include="src\View\BackgroundDrawer.hpp" />

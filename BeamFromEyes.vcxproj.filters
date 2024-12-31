@@ -255,6 +255,15 @@
     <ClCompile Include="src\Model\UIState.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="src\Model\ProgressBar.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Model\CustomShapeProgressBar.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Model\CircleProgressBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -1006,6 +1015,15 @@
     </ClInclude>
     <ClInclude Include="src\Model\UIState.hpp">
       <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model\ProgressBar.hpp">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model\CustomShapeProgressbar.hpp">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model\CircleProgressBar.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
