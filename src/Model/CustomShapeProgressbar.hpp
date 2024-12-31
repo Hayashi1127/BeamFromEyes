@@ -13,6 +13,7 @@ namespace BeamFromEyes::Model
 
 		ColorF m_backgroundColor = ColorF(0.25);
 
+		/// @brief 残量に応じて色を変える
 		Array<std::pair<double, ColorF>> m_barColors = {
 			{ 1.0, ColorF(0.1, 0.8, 0.2) }
 		};

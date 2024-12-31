@@ -11,12 +11,15 @@ namespace BeamFromEyes::Model
 
 		ColorF m_backgroundColor = ColorF(0.25);
 
+		/// @brief 残量に応じて色を変える
 		Array<std::pair<double, ColorF>> m_barColors = {
 			{ 1.0, ColorF(0.1, 0.8, 0.2) }
 		};
 
+		/// @brief 角を丸める
 		double m_round = 0.0;
 
+		/// @brief 引数の数字に応じて適切なバーの色を返す
 		ColorF getBarColor(double progress) const;
 	public:
 
