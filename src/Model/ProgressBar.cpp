@@ -58,20 +58,24 @@ namespace BeamFromEyes::Model
 	const ProgressBar& ProgressBar::SetCenter(const double x, const double y)
 	{
 		m_rect.setCenter(x, y);
+		return *this;
 	}
 
 	const ProgressBar& ProgressBar::SetCenter(const Vec2 pos)
 	{
 		m_rect.setCenter(pos);
+		return *this;
 	}
 
 	const ProgressBar& ProgressBar::SetSize(const double w, const double h)
 	{
 		m_rect.setSize(w, h);
+		return *this;
 	}
 
 	const ProgressBar& ProgressBar::SetSize(const Size size)
 	{
 		m_rect.setSize(size);
+		return *this;
 	}
 }
