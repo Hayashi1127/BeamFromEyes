@@ -6,8 +6,7 @@ namespace BeamFromEyes::Model
 	class ProgressBar
 	{
 	private:
-
-		RectF m_rect = Rect(0);
+		RectF m_rect = RectF(0);
 
 		ColorF m_backgroundColor = ColorF(0.25);
 
@@ -40,7 +39,17 @@ namespace BeamFromEyes::Model
 			m_barColors.sort_by([](const auto& a, const auto& b) { return a.first > b.first; });
 		}
 
-		// バーを描く
+		/// @brief バーを描く
 		const ProgressBar& draw(double value, double maxValue) const;
+
+		/// @brief 中心座標を変更する
+		const ProgressBar& SetCenter(const double x, const double y);
+
+		const ProgressBar& SetCenter(const Vec2 pos);
+
+		/// @brief サイズを変更する
+		const ProgressBar& SetSize(const double w, const double h);
+
+		const ProgressBar& SetSize(const Size size);
 	};
 }
