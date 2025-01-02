@@ -262,7 +262,7 @@
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="src\Model\CircleProgressBar.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1023,7 +1023,7 @@
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="src\Model\CircleProgressBar.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
