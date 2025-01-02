@@ -26,18 +26,33 @@ namespace BeamFromEyes::Model
 
 	const CircleProgressBar& CircleProgressBar::draw(double value, double maxValue) const
 	{
-		return draw(this->shape, value, maxValue);
-	}
-
-	const CircleProgressBar& CircleProgressBar::draw(const Circle shape, double value, double maxValue) const
-	{
 		const double progress = maxValue ? Math::Saturate(value / maxValue) : 1.0;
 		const Circle innnerCircle = shape;
 		const Circle innnerCircleBar(shape);
 
-		shape.drawArc(Math::ToRadians(360 - angle/2), Math::ToRadians(angle), 0, 7, backgroundColor);
-		innnerCircleBar.drawArc(Math::ToRadians(360 - angle / 2), Math::ToRadians(angle)*progress, 0, 5, getBarColor(progress));
+		shape.drawArc(Math::ToRadians(360 - angle / 2), Math::ToRadians(angle), 0, thick, backgroundColor);
+		innnerCircleBar.drawArc(Math::ToRadians(360 - angle / 2), Math::ToRadians(angle) * progress, 0, thick-2, getBarColor(progress));
 
 		return *this;
+	}
+
+	const CircleProgressBar& CircleProgressBar::SetCenter(const double x, const double y)
+	{
+		shape.setCenter(x, y);
+	}
+
+	const CircleProgressBar& CircleProgressBar::SetCenter(const Vec2 pos)
+	{
+		shape.setCenter(pos);
+	}
+
+	const CircleProgressBar& CircleProgressBar::SetRadius(const double r)
+	{
+		shape.setR(r);
+	}
+
+	const CircleProgressBar& CircleProgressBar::SetThick(const int32 t)
+	{
+		thick = t;
 	}
 }

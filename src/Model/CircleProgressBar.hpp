@@ -18,6 +18,8 @@ namespace BeamFromEyes::Model
 		/// @brief バーの描画したい角度
 		int32 angle;
 
+		int32 thick;
+
 		ColorF getBarColor(double progress) const;
 	public:
 
@@ -38,9 +40,17 @@ namespace BeamFromEyes::Model
 			this->barColors.sort_by([](const auto& a, const auto& b) { return a.first > b.first; });
 		}
 
-		// バーを描く
+		/// @brief バーを描く
 		const CircleProgressBar& draw(double value, double maxValue) const;
 
-		const CircleProgressBar& draw(const Circle shape, double value, double maxValue) const;
+		/// @brief 中心座標を変更する
+		const CircleProgressBar& SetCenter(const double x, const double y);
+
+		const CircleProgressBar& SetCenter(const Vec2 pos);
+
+		/// @brief サイズを変更する
+		const CircleProgressBar& SetRadius(const double r);
+
+		const CircleProgressBar& SetThick(const int32 t);
 	};
 }
