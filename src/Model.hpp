@@ -5,6 +5,7 @@
 # include "./Model/Obstacle.hpp"
 # include "./Model/Player.hpp"
 # include "./Model/ModelDatabase.hpp"
+# include "./Model/UIState.hpp"
 
 # include <Controller.hpp>
 
@@ -32,11 +33,15 @@ namespace BeamFromEyes::Model
 
 		/// @brief 障害物たち
 		Array<Obstacle> obstacles;
+
+		/// @brief UI描画用情報
+		UIState* uiStatePtr;
 	public:
 		ModelManager(const ControllerManager* controller);
 		~ModelManager();
 		const BackgroundObject* GetBackgroundObjectPtr() const;
 		const Array<Obstacle>* GetObstaclePtr() const;
+		const UIState* GetUIStatePtr() const;
 		void Update();
 	};
 }

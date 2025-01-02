@@ -17,6 +17,12 @@ namespace BeamFromEyes::Model
 		/// @brief 障害物のモデルデータ
 		const s3d::Model obstacleModel{ U"../ThirdParty/Quaternius_UltimateSpaceKit/Environment/OBJ/Planet_5.obj" };
 
+		/// @brief 上部UI画面
+		const s3d::Texture texUpperUI{ U"../img/UpperUI.png" };
+
+		/// @brief 下部UI画面
+		const s3d::Texture texUnderUI{ U"../img/UnderUI.png" };
+
 		ModelDatabase();
 		~ModelDatabase();
 	};
