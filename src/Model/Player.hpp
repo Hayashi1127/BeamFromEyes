@@ -1,6 +1,10 @@
 ﻿# pragma once
 # include <Siv3D.hpp>
 
+# include "./Controller/IPointerReceiver.hpp"
+
+using namespace BeamFromEyes::Controller;
+
 namespace BeamFromEyes::Model
 {
 	class Player
@@ -12,14 +16,17 @@ namespace BeamFromEyes::Model
 		/// @brief プレイヤーの攻撃力
 		int32 atp{ 10 };
 
-		/// @brief プレイヤーの位置
+		/// @brief カーソルの位置
 		Vec3 position{ 0, 0, -10 };
 
 		/// @brief 目の渇き度合
 		int32 eyeMoisture{ 100 };
+
+		const IPointerReceiver* pointerReceiverPtr;
 	public:
-		Player();
+		Player(const IPointerReceiver* pointerReceiverPtr);
 		~Player();
+		void Update();
 
 		/// @brief ダメージを受ける
 		void ReceiveDamage(const int32 enemyAtp);
@@ -38,5 +45,7 @@ namespace BeamFromEyes::Model
 		int32 GetHP() const;
 
 		int32 GetMoisture() const;
+
+		Vec3 GetPosition() const;
 	};
 }

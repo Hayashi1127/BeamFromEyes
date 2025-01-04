@@ -45,6 +45,9 @@ namespace BeamFromEyes::Model
 		{
 			obstacles.push_back(Obstacle());
 		}
+
+		playerPtr->Update();
+		uiStatePtr->Update();
 	}
 
 	ModelManager::ModelManager(const ControllerManager* controller)
@@ -52,7 +55,7 @@ namespace BeamFromEyes::Model
 		controllerManagerPtr = controller;
 
 		backgroundObjectPtr = new BackgroundObject();
-		playerPtr = new Player();
+		playerPtr = new Player(controllerManagerPtr->GetPointerReceiverPtr());
 		uiStatePtr = new UIState(playerPtr);
 
 		obstacles.clear();

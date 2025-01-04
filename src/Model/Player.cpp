@@ -2,6 +2,9 @@
 # include <Siv3D.hpp>
 
 # include "./Model/Player.hpp"
+# include "./Controller/IPointerReceiver.hpp"
+
+using namespace BeamFromEyes::Controller;
 
 namespace BeamFromEyes::Model
 {
@@ -36,9 +39,21 @@ namespace BeamFromEyes::Model
 		return eyeMoisture;
 	}
 
-	Player::Player()
+	Vec3 Player::GetPosition() const
 	{
+		return position;
+	}
 
+	void Player::Update()
+	{
+		const Vec2 pos = pointerReceiverPtr->GetPointerPosition();
+		position.x = pos.x;
+		position.y = pos.y;
+	}
+
+	Player::Player(const IPointerReceiver* pointerReceiverPtr)
+	{
+		this->pointerReceiverPtr = pointerReceiverPtr;
 	}
 
 	Player::~Player()
