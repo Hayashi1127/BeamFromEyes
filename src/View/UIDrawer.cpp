@@ -11,6 +11,8 @@ namespace BeamFromEyes::View
 	{
 		modelDatabasePtr->texUpperUI.draw(0, 5);
 		modelDatabasePtr->texUnderUI.draw(0, windowSizePtr->y - modelDatabasePtr->texUnderUI.size().y - 5);
+
+		modelDatabasePtr->moistureBar.SetCenter(uiStatePtr->GetPosition()).draw(uiStatePtr->GetCurrentMoisture(), uiStatePtr->GetInitialMoisture());
 	}
 
 	UIDrawer::UIDrawer(const UIState* uiStatePtr, const ModelDatabase* modelDatabasePtr, const Size* sizePtr)

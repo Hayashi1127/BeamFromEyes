@@ -16,7 +16,7 @@ namespace BeamFromEyes::View
 		const Size* windowSizePtr;
 
 	public:
-		UIDrawer(const UIState* uiStatePtr, const ModelDatabase* modelDatabasePtr, const Size* sizePtr);
+		UIDrawer(const UIState* uiStatePtr,const ModelDatabase* modelDatabasePtr, const Size* sizePtr);
 		~UIDrawer();
 		void Draw();
 	};
