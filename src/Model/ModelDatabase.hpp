@@ -1,6 +1,7 @@
 ﻿# pragma once
-
 # include <Siv3D.hpp>
+
+# include "./Model/CircleProgressBar.hpp"
 
 namespace BeamFromEyes::Model
 {
@@ -22,6 +23,8 @@ namespace BeamFromEyes::Model
 
 		/// @brief 下部UI画面
 		const s3d::Texture texUnderUI{ U"../img/UnderUI.png" };
+
+		mutable CircleProgressBar moistureBar{ Circle(0, 0, 40), 300};
 
 		ModelDatabase();
 		~ModelDatabase();
