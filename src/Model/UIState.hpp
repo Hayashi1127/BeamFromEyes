@@ -18,6 +18,9 @@ namespace BeamFromEyes::Model
 
 		/// @brief 現在の潤い
 		int32 currentMoisture;
+
+		/// @brief カーソルの位置
+		Vec2 position{ 0, 0 };
 	public:
 		UIState(Player* playerPtr);
 		~UIState();
@@ -26,5 +29,6 @@ namespace BeamFromEyes::Model
 		int32 GetCurrentHP();
 		int32 GetCurrentMoisture();
 		int32 GetTime();
+		Vec2 GetPosition() const;
 	};
 }

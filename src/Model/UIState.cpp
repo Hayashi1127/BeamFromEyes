@@ -20,10 +20,19 @@ namespace BeamFromEyes::Model
 		return time;
 	}
 
+	Vec2 UIState::GetPosition() const
+	{
+		return position;
+	}
+
 	void UIState::Update()
 	{
 		this->currentHP = playerPtr->GetHP();
 		this->currentMoisture = playerPtr->GetMoisture();
+
+		Vec3 pos3 = playerPtr->GetPosition();
+		this->position.x = pos3.x;
+		this->position.y = pos3.y;
 
 		time--;
 	}
