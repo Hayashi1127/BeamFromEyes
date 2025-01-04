@@ -10,11 +10,14 @@ namespace BeamFromEyes::Model
 	private:
 		const Player* playerPtr;
 
+		/// @brief HPの初期値
+		int32 initialHP;
+
 		/// @brief 現在のHP
 		int32 currentHP;
 
-		/// @brief ゲームの残り時間
-		int32 time{ 300 };
+		/// @brief 潤いの初期値
+		int32 initialMoisture;
 
 		/// @brief 現在の潤い
 		int32 currentMoisture;
@@ -26,9 +29,10 @@ namespace BeamFromEyes::Model
 		~UIState();
 		void Update();
 
-		int32 GetCurrentHP();
-		int32 GetCurrentMoisture();
-		int32 GetTime();
+		int32 GetInitialHP() const;
+		int32 GetCurrentHP() const;
+		int32 GetInitialMoisture() const;
+		int32 GetCurrentMoisture() const;
 		Vec2 GetPosition() const;
 	};
 }
