@@ -36,25 +36,25 @@ namespace BeamFromEyes::Model
 		return *this;
 	}
 
-	const CircleProgressBar& CircleProgressBar::SetCenter(const double x, const double y)
+	CircleProgressBar& CircleProgressBar::SetCenter(const double x, const double y)
 	{
 		shape.setCenter(x, y);
 		return *this;
 	}
 
-	const CircleProgressBar& CircleProgressBar::SetCenter(const Vec2 pos)
+	CircleProgressBar& CircleProgressBar::SetCenter(const Vec2 pos)
 	{
 		shape.setCenter(pos);
 		return *this;
 	}
 
-	const CircleProgressBar& CircleProgressBar::SetRadius(const double r)
+	CircleProgressBar& CircleProgressBar::SetRadius(const double r)
 	{
 		shape.setR(r);
 		return *this;
 	}
 
-	const CircleProgressBar& CircleProgressBar::SetThick(const int32 t)
+	CircleProgressBar& CircleProgressBar::SetThick(const int32 t)
 	{
 		thick = t;
 		return *this;
