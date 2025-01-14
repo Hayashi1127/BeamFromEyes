@@ -44,13 +44,13 @@ namespace BeamFromEyes::Model
 		const CircleProgressBar& draw(double value, double maxValue) const;
 
 		/// @brief 中心座標を変更する
-		const CircleProgressBar& SetCenter(const double x, const double y);
+		CircleProgressBar& SetCenter(const double x, const double y);
 
-		const CircleProgressBar& SetCenter(const Vec2 pos);
+		CircleProgressBar& SetCenter(const Vec2 pos);
 
 		/// @brief サイズを変更する
-		const CircleProgressBar& SetRadius(const double r);
+		CircleProgressBar& SetRadius(const double r);
 
-		const CircleProgressBar& SetThick(const int32 t);
+		CircleProgressBar& SetThick(const int32 t);
 	};
 }

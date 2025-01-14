@@ -8,7 +8,7 @@ namespace BeamFromEyes::Controller
 	{
 	public:
 		virtual void Update() = 0; 
-		virtual Vec2 GetPointerPosition() = 0;
-		virtual bool GetIsPressed() = 0;
+		virtual Vec2 GetPointerPosition() const = 0;
+		virtual bool GetIsPressed() const = 0;
 	};
 }

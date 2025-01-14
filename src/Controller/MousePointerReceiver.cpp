@@ -10,17 +10,17 @@ namespace BeamFromEyes::Controller
 	{
 		windowPos = Window::GetPos();
 		sceneSize = Scene::Size();
-		position = Cursor::ScreenPos() - windowPos - sceneSize / 2;
+		position = Cursor::ScreenPos(); //- windowPos - sceneSize / 2;
 
 		isPressed = MouseL.pressed();
 	}
 
-	Vec2 MousePointerReceiver::GetPointerPosition()
+	Vec2 MousePointerReceiver::GetPointerPosition() const
 	{
 		return position;
 	}
 
-	bool MousePointerReceiver::GetIsPressed()
+	bool MousePointerReceiver::GetIsPressed() const
 	{
 		return isPressed;
 	}

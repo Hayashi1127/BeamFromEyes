@@ -24,7 +24,7 @@ namespace BeamFromEyes::Controller
 		MousePointerReceiver();
 		~MousePointerReceiver();
 		void Update();
-		Vec2 GetPointerPosition();
-		bool GetIsPressed();
+		Vec2 GetPointerPosition() const;
+		bool GetIsPressed() const;
 	};
 }
