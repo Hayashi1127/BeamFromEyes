@@ -5,7 +5,8 @@ namespace BeamFromEyes::Controller
 {
 	void ControllerManager::Update()
 	{
-		pointerReceiverPtr->Update();
+		// mousePointerReceiverPtr->Update();
+		eyetrackingReceiverPtr->Update();
 	}
 
 	const IPointerReceiver* ControllerManager::GetPointerReceiverPtr() const
@@ -15,11 +16,17 @@ namespace BeamFromEyes::Controller
 
 	ControllerManager::ControllerManager()
 	{
-		pointerReceiverPtr = new MousePointerReceiver();
+		// mousePointerReceiverPtr = new MousePointerReceiver();
+		eyetrackingReceiverPtr = new EyetrackingReceiver();
+
+		pointerReceiverPtr = eyetrackingReceiverPtr;
 	}
 
 	ControllerManager::~ControllerManager()
 	{
-		delete(pointerReceiverPtr);
+		// delete(mousePointerReceiverPtr);
+		delete(eyetrackingReceiverPtr);
+
+		pointerReceiverPtr = nullptr;
 	}
 }
