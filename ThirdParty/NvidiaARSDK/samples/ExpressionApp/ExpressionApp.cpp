@@ -891,11 +891,11 @@ NvCV_Status App::init() {
     printf("{\"%s\",\"%s\"}: %s\n", FLAG_modelDir.c_str(), FLAG_renderModel.c_str(), NvCV_GetErrorStringFromCode(err));
     return err;
   }
-  err = _renderer->init(_renderWidth, _renderHeight, _windowTitle);
+  /*err = _renderer->init(_renderWidth, _renderHeight, _windowTitle);
   if (NVCV_SUCCESS != err) {
     printf("renderer init: %s\n", NvCV_GetErrorStringFromCode(err));
     return err;
-  }
+  }*/
 
   BAIL_IF_ERR(err = NvCVImage_Alloc(&_srcGpu,    _videoWidth,   _videoHeight, NVCV_BGR,  NVCV_U8, NVCV_CHUNKY, NVCV_GPU, 1));
   BAIL_IF_ERR(err = NvCVImage_Alloc(&_srcImg,    _videoWidth,   _videoHeight, NVCV_BGR,  NVCV_U8, NVCV_CHUNKY, NVCV_CPU_PINNED, 0));
@@ -964,61 +964,61 @@ NvCV_Status App::run() {
       // continue;                                             // Read the first frame again
     }
 
-#ifdef _ENABLE_UI
-    unsigned int exprMode = 0;
-    bool uncalibrate = false;
-    bool calibrate = false;
-    unsigned int filter = 0;
-    unsigned int viewMode = 0;
-    bool killApp = false;
-    if (FLAG_showUI) {
-      ui_obj_.stateQuerybyCore(viewMode, exprMode, filter, calibrate, uncalibrate, _showFPS, _globalExpressionParam, _expressionZeroPoint, _expressionScale, _expressionExponent, killApp);
-
-      if (killApp == true) {
-        return NvFromAppErr(APP_ERR_CANCEL);
-      }
-      _performCalibration = calibrate;
-
-      if (viewMode != _viewMode) {
-        _viewMode = viewMode;
-        resizeDst();
-      }
-      if (uncalibrate) {
-        unCalibrateExpressionWeights();
-      }
-      if ((filter ^ _filtering) & NVAR_TEMPORAL_FILTER_FACE_BOX) {
-        toggleFaceBoxFiltering();
-      }
-      if ((filter ^ _filtering) & NVAR_TEMPORAL_FILTER_FACIAL_LANDMARKS) {
-        toggleLandmarkFiltering();
-      }
-      if ((filter ^ _filtering) & NVAR_TEMPORAL_FILTER_FACE_ROTATIONAL_POSE) {
-        togglePoseFiltering();
-      }
-      if ((filter ^ _filtering) & NVAR_TEMPORAL_FILTER_FACIAL_EXPRESSIONS) {
-        toggleExpressionFiltering();
-      }
-      if ((filter ^ _filtering) & NVAR_TEMPORAL_FILTER_FACIAL_GAZE) {
-        toggleGazeFiltering();
-      }
-      if ((filter ^ _filtering) & NVAR_TEMPORAL_FILTER_ENHANCE_EXPRESSIONS) {
-        toggleClosureEnhancement();
-      }
-      _filtering = filter;
-
-      if (_exprMode != exprMode) {
-        if (exprMode == EXPR_MODE_MESH) {
-          initFaceFit();
-        }
-        else if (exprMode == EXPR_MODE_MLP) {
-          initMLPExpressions();
-        }
-        else {
-          // add more modes if needed
-        }
-      }
-    }
-#endif  // _ENABLE_UI
+//#ifdef _ENABLE_UI
+//    unsigned int exprMode = 0;
+//    bool uncalibrate = false;
+//    bool calibrate = false;
+//    unsigned int filter = 0;
+//    unsigned int viewMode = 0;
+//    bool killApp = false;
+//    if (FLAG_showUI) {
+//      ui_obj_.stateQuerybyCore(viewMode, exprMode, filter, calibrate, uncalibrate, _showFPS, _globalExpressionParam, _expressionZeroPoint, _expressionScale, _expressionExponent, killApp);
+//
+//      if (killApp == true) {
+//        return NvFromAppErr(APP_ERR_CANCEL);
+//      }
+//      _performCalibration = calibrate;
+//
+//      if (viewMode != _viewMode) {
+//        _viewMode = viewMode;
+//        resizeDst();
+//      }
+//      if (uncalibrate) {
+//        unCalibrateExpressionWeights();
+//      }
+//      if ((filter ^ _filtering) & NVAR_TEMPORAL_FILTER_FACE_BOX) {
+//        toggleFaceBoxFiltering();
+//      }
+//      if ((filter ^ _filtering) & NVAR_TEMPORAL_FILTER_FACIAL_LANDMARKS) {
+//        toggleLandmarkFiltering();
+//      }
+//      if ((filter ^ _filtering) & NVAR_TEMPORAL_FILTER_FACE_ROTATIONAL_POSE) {
+//        togglePoseFiltering();
+//      }
+//      if ((filter ^ _filtering) & NVAR_TEMPORAL_FILTER_FACIAL_EXPRESSIONS) {
+//        toggleExpressionFiltering();
+//      }
+//      if ((filter ^ _filtering) & NVAR_TEMPORAL_FILTER_FACIAL_GAZE) {
+//        toggleGazeFiltering();
+//      }
+//      if ((filter ^ _filtering) & NVAR_TEMPORAL_FILTER_ENHANCE_EXPRESSIONS) {
+//        toggleClosureEnhancement();
+//      }
+//      _filtering = filter;
+//
+//      if (_exprMode != exprMode) {
+//        if (exprMode == EXPR_MODE_MESH) {
+//          initFaceFit();
+//        }
+//        else if (exprMode == EXPR_MODE_MLP) {
+//          initMLPExpressions();
+//        }
+//        else {
+//          // add more modes if needed
+//        }
+//      }
+//    }
+//#endif  // _ENABLE_UI
 
     // BAIL_IF_ERR(err = NvCVImage_Transfer(&_srcImg, &_srcGpu, 1.f, _stream, nullptr));
     // BAIL_IF_ERR(err = NvAR_Run(_featureHan));
@@ -1045,37 +1045,37 @@ NvCV_Status App::run() {
     normalizeExpressionsWeights();
 
 	// 顔面描画部分なので一旦なし
-    if (_viewMode & VIEW_LM & isFaceDetected) {
-      BAIL_IF_ERR(err = overlayLandmarks(&_landmarks.data()->x, _renderHeight, &_srcImg));
-    }
-    if (_viewMode & VIEW_IMAGE) {
-      NvCVImage_InitView(&view, &_compImg, _miniX, _miniY, _miniWidth, _miniHeight);
-      err = ResizeNvCVImage(&_srcImg, &view);
-    }
-    if (_viewMode & VIEW_PLOT) {
-      if (!isFaceDetected)  std::fill(_expressions.begin(), _expressions.end(), 0);
-      barPlotExprs();
-    }
-    if (_viewMode & VIEW_MESH) {
-      if (isFaceDetected) {
-        float* head_translation = _poseMode == 1 ? &_pose.translation.vec[0] : nullptr;
-        BAIL_IF_ERR(err = _renderer->render(_expressions.data(), &_pose.rotation.x, head_translation, &_renderImg));   // GL _renderImg is upside down
-        NvCVImage_InitView(&view, &_compImg, _renderX, _renderY, _renderWidth, _renderHeight);
-        NvCVImage_FlipY(&view, &view);  // Since OpenGL renderImg is upside-down, we copy it to a flipped dst
-        NvCVImage_Transfer(&_renderImg, &view, 1.0f, _stream, nullptr);  // VFlip RGBA --> BGR
-      }
-      else {
-        cv::Mat compImgCVMat;
-        CVWrapperForNvCVImage(&_compImg, &compImgCVMat);
-        cv::rectangle(compImgCVMat, cv::Rect(_renderX, _renderY, _renderWidth, _renderHeight), cv::Scalar(0, 0, 0), -1);
-      }
-    }
-    if (_vidOut.isOpened())
-      _vidOut.write(_ocvDstImg);
-    drawFPS(_ocvDstImg);
-    if (FLAG_show && _ocvDstImg.cols && _ocvDstImg.rows) {
-      cv::imshow(_windowTitle, _ocvDstImg);
-    }
+    //if (_viewMode & VIEW_LM & isFaceDetected) {
+    //  BAIL_IF_ERR(err = overlayLandmarks(&_landmarks.data()->x, _renderHeight, &_srcImg));
+    //}
+    //if (_viewMode & VIEW_IMAGE) {
+    //  NvCVImage_InitView(&view, &_compImg, _miniX, _miniY, _miniWidth, _miniHeight);
+    //  err = ResizeNvCVImage(&_srcImg, &view);
+    //}
+    //if (_viewMode & VIEW_PLOT) {
+    //  if (!isFaceDetected)  std::fill(_expressions.begin(), _expressions.end(), 0);
+    //  barPlotExprs();
+    //}
+    //if (_viewMode & VIEW_MESH) {
+    //  if (isFaceDetected) {
+    //    float* head_translation = _poseMode == 1 ? &_pose.translation.vec[0] : nullptr;
+    //    BAIL_IF_ERR(err = _renderer->render(_expressions.data(), &_pose.rotation.x, head_translation, &_renderImg));   // GL _renderImg is upside down
+    //    NvCVImage_InitView(&view, &_compImg, _renderX, _renderY, _renderWidth, _renderHeight);
+    //    NvCVImage_FlipY(&view, &view);  // Since OpenGL renderImg is upside-down, we copy it to a flipped dst
+    //    NvCVImage_Transfer(&_renderImg, &view, 1.0f, _stream, nullptr);  // VFlip RGBA --> BGR
+    //  }
+    //  else {
+    //    cv::Mat compImgCVMat;
+    //    CVWrapperForNvCVImage(&_compImg, &compImgCVMat);
+    //    cv::rectangle(compImgCVMat, cv::Rect(_renderX, _renderY, _renderWidth, _renderHeight), cv::Scalar(0, 0, 0), -1);
+    //  }
+    //}
+    //if (_vidOut.isOpened())
+    //  _vidOut.write(_ocvDstImg);
+    //drawFPS(_ocvDstImg);
+    //if (FLAG_show && _ocvDstImg.cols && _ocvDstImg.rows) {
+    //  cv::imshow(_windowTitle, _ocvDstImg);
+    //}
 
 //    int key = cv::waitKey(1);
 //    if (key >= 0 && FLAG_debug)
