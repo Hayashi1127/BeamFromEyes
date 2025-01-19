@@ -10,7 +10,12 @@ namespace BeamFromEyes::Controller
 	class ControllerManager
 	{
 	private:
+		MousePointerReceiver* mousePointerReceiverPtr = nullptr;
+
+		EyetrackingReceiver* eyetrackingReceiverPtr = nullptr;
+
 		IPointerReceiver* pointerReceiverPtr = nullptr;
+
 	public:
 		ControllerManager();
 		~ControllerManager();
