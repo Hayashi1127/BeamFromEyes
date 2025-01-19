@@ -20,6 +20,7 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 ###############################################################################*/
+# pragma once
 #include "ExpressionApp.hpp"
 
 #include <chrono>
@@ -51,76 +52,39 @@
 #include "ExpressionAppUI.h"
 #endif  // _ENABLE_UI
 
-#if CV_MAJOR_VERSION >= 4
-  #define CV_CAP_PROP_FPS           cv::CAP_PROP_FPS
-  #define CV_CAP_PROP_FRAME_COUNT   cv::CAP_PROP_FRAME_COUNT
-  #define CV_CAP_PROP_FRAME_HEIGHT  cv::CAP_PROP_FRAME_HEIGHT
-  #define CV_CAP_PROP_FRAME_WIDTH   cv::CAP_PROP_FRAME_WIDTH
-  #define CV_CAP_PROP_POS_FRAMES    cv::CAP_PROP_POS_FRAMES
-  #define CV_INTER_AREA             cv::INTER_AREA
-  #define CV_INTER_LINEAR           cv::INTER_LINEAR
-#endif // CV_MAJOR_VERSION
-
-#ifndef M_PI
-  #define M_PI                      3.1415926535897932385
-#endif /* M_PI */
-#ifndef M_2PI
-  #define M_2PI                     6.2831853071795864769
-#endif /* M_2PI */
-#ifndef M_PI_2
-  #define M_PI_2                    1.5707963267948966192
-#endif /* M_PI_2 */
-#define D_RADIANS_PER_DEGREE        (M_PI / 180.)
-#define F_PI                        ((float)M_PI)
-#define F_PI_2                      ((float)M_PI_2)
-#define F_2PI                       ((float)M_2PI)
-#define F_RADIANS_PER_DEGREE        (float)(M_PI / 180.)
-#define CTL(x)                      ((x) & 0x1F)
-#define HELP_REQUESTED              411
-
-#define BAIL_IF_ERR(err)            do { if ((int)(err) != 0)     { goto bail;             } } while(0)
-#define BAIL_IF_NULL(x, err, code)  do { if ((void*)(x) == NULL)  { err = code; goto bail; } } while(0)
-#define BAIL_IF_CUERR(cu, err)      do { if (cudaSuccess != (cu)) { err = NvFromCuErr(cu); } } while(0)
-#define BAIL(err, code)             do {                            err = code; goto bail;   } while(0)
-
-#define DEFAULT_CODEC         "avc1"
-#define DEFAULT_FACE_MODEL    "face_model2.nvf"
-#define DEFAULT_RENDER_MODEL  "face_model2.nvf"
-#define NUM_CAMERA_INTRINSIC_PARAMS 3
-
 /********************************************************************************
  * Command-line arguments
  ********************************************************************************/
 
 bool
-    FLAG_debug              = false,
-    FLAG_loop               = false,
-    FLAG_show               = false,
-    FLAG_showUI             = false,
-    FLAG_verbose            = false;
+FLAG_debug = false,
+FLAG_loop = false,
+FLAG_show = false,
+FLAG_showUI = false,
+FLAG_verbose = false;
 std::string
-    FLAG_camRes,
-    FLAG_codec              = DEFAULT_CODEC,
-    FLAG_fitModel           = DEFAULT_FACE_MODEL,
-    FLAG_inFile,
-    FLAG_modelDir,
-    FLAG_outDir,
-    FLAG_outFile,
-    FLAG_renderModel        = DEFAULT_RENDER_MODEL;
+FLAG_camRes,
+FLAG_codec = DEFAULT_CODEC,
+FLAG_fitModel = DEFAULT_FACE_MODEL,
+FLAG_inFile,
+FLAG_modelDir,
+FLAG_outDir,
+FLAG_outFile,
+FLAG_renderModel = DEFAULT_RENDER_MODEL;
 int
-    FLAG_filter             = NVAR_TEMPORAL_FILTER_FACE_BOX
-                            | NVAR_TEMPORAL_FILTER_FACIAL_LANDMARKS
-                            | NVAR_TEMPORAL_FILTER_FACE_ROTATIONAL_POSE
-                            | NVAR_TEMPORAL_FILTER_FACIAL_EXPRESSIONS
-                            | NVAR_TEMPORAL_FILTER_FACIAL_GAZE,
-                            //| NVAR_TEMPORAL_FILTER_ENHANCE_EXPRESSIONS,
-    FLAG_viewMode           = 0xF,                // VIEW_MESH | VIEW_IMAGE | VIEW_PLOT | VIEW_LM
-    FLAG_exprMode           = 2,                  // 1=mesh, 2=MLP
-    FLAG_poseMode           = 0,
-    FLAG_cheekPuff          = 0,
-    FLAG_gaze               = 0;
+FLAG_filter = NVAR_TEMPORAL_FILTER_FACE_BOX
+| NVAR_TEMPORAL_FILTER_FACIAL_LANDMARKS
+| NVAR_TEMPORAL_FILTER_FACE_ROTATIONAL_POSE
+| NVAR_TEMPORAL_FILTER_FACIAL_EXPRESSIONS
+| NVAR_TEMPORAL_FILTER_FACIAL_GAZE,
+//| NVAR_TEMPORAL_FILTER_ENHANCE_EXPRESSIONS,
+FLAG_viewMode = 0xF,                // VIEW_MESH | VIEW_IMAGE | VIEW_PLOT | VIEW_LM
+FLAG_exprMode = 2,                  // 1=mesh, 2=MLP
+FLAG_poseMode = 0,
+FLAG_cheekPuff = 0,
+FLAG_gaze = 0;
 double
-    FLAG_fov                = 0.0;                // Orthographic by default
+FLAG_fov = 0.0;                // Orthographic by default
 
 
 /********************************************************************************
@@ -257,13 +221,13 @@ static int StringToFourcc(const std::string &str) {
 static int ParseMyArgs(int argc, char **argv) {
   // query NVAR_MODEL_DIR environment variable first before checking the command line arguments
   // const char* modelPath = getenv("NVAR_MODEL_DIR");
-  char* modelPath;
+  /*char* modelPath;
   size_t len;
   errno_t err = _dupenv_s(&modelPath, &len, "NVAR_MODEL_DIR");
   
   if (modelPath) {
     FLAG_modelDir = modelPath;
-  }
+  }*/
 
   int errs = 0;
   for (--argc, ++argv; argc--; ++argv) {
@@ -349,140 +313,140 @@ static bool SetPathIfFileExists(const std::string& testDir, const std::string& f
   return exists;
 }
 
-class MyTimer {
-public:
-  MyTimer()     { dt = dt.zero();                                      }  /**< Clear the duration to 0. */
-  void start()  { t0 = std::chrono::high_resolution_clock::now();      }  /**< Start  the timer. */
-  void pause()  { dt = std::chrono::high_resolution_clock::now() - t0; }  /**< Pause  the timer. */
-  void resume() { t0 = std::chrono::high_resolution_clock::now() - dt; }  /**< Resume the timer. */
-  void stop()   { pause();                                             }  /**< Stop   the timer. */
-  double elapsedTimeFloat() const {
-    return std::chrono::duration<double>(dt).count();
-  } /**< Report the elapsed time as a float. */
-private:
-  std::chrono::high_resolution_clock::time_point t0;
-  std::chrono::high_resolution_clock::duration dt;
-};
+//class MyTimer {
+//public:
+//  MyTimer()     { dt = dt.zero();                                      }  /**< Clear the duration to 0. */
+//  void start()  { t0 = std::chrono::high_resolution_clock::now();      }  /**< Start  the timer. */
+//  void pause()  { dt = std::chrono::high_resolution_clock::now() - t0; }  /**< Pause  the timer. */
+//  void resume() { t0 = std::chrono::high_resolution_clock::now() - dt; }  /**< Resume the timer. */
+//  void stop()   { pause();                                             }  /**< Stop   the timer. */
+//  double elapsedTimeFloat() const {
+//    return std::chrono::duration<double>(dt).count();
+//  } /**< Report the elapsed time as a float. */
+//private:
+//  std::chrono::high_resolution_clock::time_point t0;
+//  std::chrono::high_resolution_clock::duration dt;
+//};
 
 inline NvCV_Status NvFromAppErr(int appErr) { return (NvCV_Status)appErr; }
 
 
-class App {
-public:
-
-  App() {}
-  ~App() { stop(); }
-
-  NvCV_Status run();
-  NvCV_Status stop();
-  NvCV_Status setInputVideo(const std::string& file); // open immediately
-  NvCV_Status setInputCamera(int index, const std::string& resStr); // open immediately
-  NvCV_Status setOutputVideo(const std::string& file);
-  NvCV_Status set(int codec, double fps, unsigned width, unsigned height);  // deferred open
-  NvCV_Status init();
-  NvCV_Status resizeDst();
-  NvCV_Status openOutputVideo(int codec, double fps, unsigned width, unsigned height);
-  NvCV_Status initFaceFit();
-  NvCV_Status initMLPExpressions();
-  NvCV_Status calibrateExpressionWeights();
-  NvCV_Status unCalibrateExpressionWeights();
-  NvCV_Status normalizeExpressionsWeights();
-  NvCV_Status updateCamera();
-  NvCV_Status toggleFaceBoxFiltering();
-  NvCV_Status toggleLandmarkFiltering();
-  NvCV_Status togglePoseFiltering();
-  NvCV_Status toggleExpressionFiltering();
-  NvCV_Status toggleGazeFiltering();
-  NvCV_Status toggleClosureEnhancement();
-  NvCV_Status togglePoseMode();
-  NvCV_Status overlayLandmarks(const float landmarks[126 * 2], unsigned screenHeight, NvCVImage *im);
-  void getFPS();
-  void drawFPS(cv::Mat& img);
-  void barPlotExprs();
-
-  const char *getErrorStringFromCode(NvCV_Status err);
-
-  struct Pose {
-    NvAR_Quaternion rotation;
-    NvAR_Vector3f translation;
-    float* data() { return &rotation.x; }
-    const float* data() const { return &rotation.x; }
-  };
-  CUstream          _stream = 0;
-  cv::Mat           _ocvSrcImg, _ocvDstImg; // _ocvSrcImg is allocated, _ocvDstImg is just a wrapper
-  cv::VideoCapture  _vidIn{};
-  cv::VideoWriter   _vidOut{};
-  double            _frameRate;
-  int               _miniX, _miniY, _renderX, _renderY, _plotX, _plotY;
-  NvAR_FaceMesh     _arMesh { nullptr, 0, nullptr, 0 };
-  NvAR_FeatureHandle _featureHan{};
-  NvAR_RenderingParams _renderParams;
-  NvCVImage         _srcImg, _compImg, _srcGpu, _renderImg; // wrapper, alloced, alloced, alloced
-  Pose              _pose;
-  float             _cameraIntrinsicParams[NUM_CAMERA_INTRINSIC_PARAMS];
-  std::string       _inFile, _outFile;
-  std::vector<NvAR_Rect> _outputBboxData;
-  NvAR_BBoxes        _outputBboxes;
-  std::vector<float> _expressions, _expressionZeroPoint, _expressionScale, _expressionExponent, _eigenvalues,
-                     _landmarkConfidence;
-  std::vector<NvAR_Point2f> _landmarks;
-  std::vector<NvAR_Vector3f> _vertices;
-  std::vector< NvAR_Vector3u16> _triangles;
-  unsigned          _videoWidth, _videoHeight, _miniWidth, _miniHeight, _renderWidth, _renderHeight,
-                    _plotWidth, _plotHeight, _compWidth, _compHeight, _eigenCount, _exprCount, _landmarkCount,
-                    _viewMode, _exprMode, _filtering;
-  unsigned          _poseMode = 0;
-  bool              _enableCheekPuff;
-  MeshRendererBroker _broker;
-  MeshRenderer      *_renderer = nullptr;
-  static const char _windowTitle[], *_exprAbbr[][4], *_sfmExprAbbr[][4];
-  MyTimer           _timer;
-  bool              _showFPS;
-  bool              _performCalibration;
-  bool              _cameraNeedsUpdate;
-  double            _frameTime;
-  float             _globalExpressionParam;
-#ifdef _ENABLE_UI
-  ExpressionAppUI   ui_obj_;
-#endif  // _ENABLE_UI
-  enum {
-    EXPR_MODE_MESH  = 1,
-    EXPR_MODE_MLP   = 2,
-  };
-  enum {
-    VIEW_MESH   = (1 << 0),
-    VIEW_IMAGE  = (1 << 1),
-    VIEW_PLOT   = (1 << 2),
-    VIEW_LM     = (1 << 3)
-  };
-  enum {
-    APP_ERR_GENERAL = 1,
-    APP_ERR_OPEN,
-    APP_ERR_READ,
-    APP_ERR_WRITE,
-    APP_ERR_INIT,
-    APP_ERR_RUN,
-    APP_ERR_EFFECT,
-    APP_ERR_PARAM,
-    APP_ERR_UNIMPLEMENTED,
-    APP_ERR_MISSING,
-    APP_ERR_VIDEO,
-    APP_ERR_IMAGE_SIZE,
-    APP_ERR_NOT_FOUND,
-    APP_ERR_FACE_MODEL,
-    APP_ERR_GLFW_INIT,
-    APP_ERR_GL_INIT,
-    APP_ERR_RENDER_INIT,
-    APP_ERR_GL_RESOURCE,
-    APP_ERR_GL_GENERAL,
-    APP_ERR_FACE_FIT,
-    APP_ERR_NO_FACE,
-    APP_ERR_CANCEL,
-    APP_ERR_CAMERA,
-    APP_ERR_ARG_PARSE,
-    APP_ERR_EOF
-  };
-};
+//class App {
+//public:
+//
+//  App() {}
+//  ~App() { stop(); }
+//
+//  NvCV_Status run();
+//  NvCV_Status stop();
+//  NvCV_Status setInputVideo(const std::string& file); // open immediately
+//  NvCV_Status setInputCamera(int index, const std::string& resStr); // open immediately
+//  NvCV_Status setOutputVideo(const std::string& file);
+//  NvCV_Status set(int codec, double fps, unsigned width, unsigned height);  // deferred open
+//  NvCV_Status init();
+//  NvCV_Status resizeDst();
+//  NvCV_Status openOutputVideo(int codec, double fps, unsigned width, unsigned height);
+//  NvCV_Status initFaceFit();
+//  NvCV_Status initMLPExpressions();
+//  NvCV_Status calibrateExpressionWeights();
+//  NvCV_Status unCalibrateExpressionWeights();
+//  NvCV_Status normalizeExpressionsWeights();
+//  NvCV_Status updateCamera();
+//  NvCV_Status toggleFaceBoxFiltering();
+//  NvCV_Status toggleLandmarkFiltering();
+//  NvCV_Status togglePoseFiltering();
+//  NvCV_Status toggleExpressionFiltering();
+//  NvCV_Status toggleGazeFiltering();
+//  NvCV_Status toggleClosureEnhancement();
+//  NvCV_Status togglePoseMode();
+//  NvCV_Status overlayLandmarks(const float landmarks[126 * 2], unsigned screenHeight, NvCVImage *im);
+//  void getFPS();
+//  void drawFPS(cv::Mat& img);
+//  void barPlotExprs();
+//
+//  const char *getErrorStringFromCode(NvCV_Status err);
+//
+//  struct Pose {
+//    NvAR_Quaternion rotation;
+//    NvAR_Vector3f translation;
+//    float* data() { return &rotation.x; }
+//    const float* data() const { return &rotation.x; }
+//  };
+//  CUstream          _stream = 0;
+//  cv::Mat           _ocvSrcImg, _ocvDstImg; // _ocvSrcImg is allocated, _ocvDstImg is just a wrapper
+//  cv::VideoCapture  _vidIn{};
+//  cv::VideoWriter   _vidOut{};
+//  double            _frameRate;
+//  int               _miniX, _miniY, _renderX, _renderY, _plotX, _plotY;
+//  NvAR_FaceMesh     _arMesh { nullptr, 0, nullptr, 0 };
+//  NvAR_FeatureHandle _featureHan{};
+//  NvAR_RenderingParams _renderParams;
+//  NvCVImage         _srcImg, _compImg, _srcGpu, _renderImg; // wrapper, alloced, alloced, alloced
+//  Pose              _pose;
+//  float             _cameraIntrinsicParams[NUM_CAMERA_INTRINSIC_PARAMS];
+//  std::string       _inFile, _outFile;
+//  std::vector<NvAR_Rect> _outputBboxData;
+//  NvAR_BBoxes        _outputBboxes;
+//  std::vector<float> _expressions, _expressionZeroPoint, _expressionScale, _expressionExponent, _eigenvalues,
+//                     _landmarkConfidence;
+//  std::vector<NvAR_Point2f> _landmarks;
+//  std::vector<NvAR_Vector3f> _vertices;
+//  std::vector< NvAR_Vector3u16> _triangles;
+//  unsigned          _videoWidth, _videoHeight, _miniWidth, _miniHeight, _renderWidth, _renderHeight,
+//                    _plotWidth, _plotHeight, _compWidth, _compHeight, _eigenCount, _exprCount, _landmarkCount,
+//                    _viewMode, _exprMode, _filtering;
+//  unsigned          _poseMode = 0;
+//  bool              _enableCheekPuff;
+//  MeshRendererBroker _broker;
+//  MeshRenderer      *_renderer = nullptr;
+//  static const char _windowTitle[], *_exprAbbr[][4], *_sfmExprAbbr[][4];
+//  MyTimer           _timer;
+//  bool              _showFPS;
+//  bool              _performCalibration;
+//  bool              _cameraNeedsUpdate;
+//  double            _frameTime;
+//  float             _globalExpressionParam;
+//#ifdef _ENABLE_UI
+//  ExpressionAppUI   ui_obj_;
+//#endif  // _ENABLE_UI
+//  enum {
+//    EXPR_MODE_MESH  = 1,
+//    EXPR_MODE_MLP   = 2,
+//  };
+//  enum {
+//    VIEW_MESH   = (1 << 0),
+//    VIEW_IMAGE  = (1 << 1),
+//    VIEW_PLOT   = (1 << 2),
+//    VIEW_LM     = (1 << 3)
+//  };
+//  enum {
+//    APP_ERR_GENERAL = 1,
+//    APP_ERR_OPEN,
+//    APP_ERR_READ,
+//    APP_ERR_WRITE,
+//    APP_ERR_INIT,
+//    APP_ERR_RUN,
+//    APP_ERR_EFFECT,
+//    APP_ERR_PARAM,
+//    APP_ERR_UNIMPLEMENTED,
+//    APP_ERR_MISSING,
+//    APP_ERR_VIDEO,
+//    APP_ERR_IMAGE_SIZE,
+//    APP_ERR_NOT_FOUND,
+//    APP_ERR_FACE_MODEL,
+//    APP_ERR_GLFW_INIT,
+//    APP_ERR_GL_INIT,
+//    APP_ERR_RENDER_INIT,
+//    APP_ERR_GL_RESOURCE,
+//    APP_ERR_GL_GENERAL,
+//    APP_ERR_FACE_FIT,
+//    APP_ERR_NO_FACE,
+//    APP_ERR_CANCEL,
+//    APP_ERR_CAMERA,
+//    APP_ERR_ARG_PARSE,
+//    APP_ERR_EOF
+//  };
+//};
 const char App::_windowTitle[] = "Expression App";
 const char *App::_exprAbbr[][4] = {
   { "BROW", "DOWN", "LEFT", NULL    },    // 0  browDown_L
@@ -838,9 +802,35 @@ NvCV_Status App::updateCamera() {
 }
 
 NvCV_Status App::init() {
-  NvCV_Status err;
+  NvCV_Status err ;
   std::string path;
   std::vector<std::string> rendererList;
+
+  ////////////// 初期化追加
+  char* modelPath;
+  size_t len;
+  _dupenv_s(&modelPath, &len, "NVAR_MODEL_DIR");
+
+  if (modelPath) {
+	  FLAG_modelDir = modelPath;
+  }
+  else
+  {
+	  return NVCV_ERR_LIBRARY;
+  }
+
+  err = setInputCamera(1, FLAG_camRes);
+  if (NVCV_SUCCESS != err) {
+	  printf("ERROR: cam0: %s\n", getErrorStringFromCode(err));
+	  return err;
+  }
+
+  err = setOutputVideo(FLAG_outFile);
+  if (NVCV_SUCCESS != err) {
+	  printf("ERROR: \"%s\": %s\n", FLAG_outFile.c_str(), getErrorStringFromCode(err));
+	  return err;
+  }
+  /////////////// ここまで
 
   _renderHeight = 480;
   _renderWidth  = 480;
@@ -915,13 +905,13 @@ NvCV_Status App::init() {
   CVWrapperForNvCVImage(&_srcImg,  &_ocvSrcImg);
   resizeDst();
 
-  if (!FLAG_outFile.empty() || !FLAG_show) {
+  /*if (!FLAG_outFile.empty() || !FLAG_show) {
     err = App::openOutputVideo(StringToFourcc(FLAG_codec), _frameRate, _compWidth, _compHeight);
     if (NVCV_SUCCESS != err) {
       printf("ERROR: \"%s\": %s\n", _outFile.c_str(), getErrorStringFromCode(err));
       goto bail;
     }
-  }
+  }*/
 
   // Initialize AR effect
   switch (FLAG_exprMode) {
@@ -960,17 +950,18 @@ NvCV_Status App::overlayLandmarks(const float landmarks[126 * 2], unsigned scree
   return NVCV_SUCCESS;
 }
 
+// フェイシャルトラッキング本体
 NvCV_Status App::run() {
   NvCV_Status err = NVCV_SUCCESS;
   NvCVImage tmpImg, view;
 
-  for (unsigned frameCount = 0;; ++frameCount) {
+  // for (unsigned frameCount = 0;; ++frameCount) { // 無限for文開始
     if (!_vidIn.read(_ocvSrcImg) || _ocvSrcImg.empty()) {
-      if (!frameCount) return NvFromAppErr(APP_ERR_VIDEO);  // No frames in video
+      // if (!frameCount) return NvFromAppErr(APP_ERR_VIDEO);  // No frames in video
       if (!FLAG_loop)  return NvFromAppErr(APP_ERR_EOF);    // Video has completed
       _vidIn.set(CV_CAP_PROP_POS_FRAMES, 0);                // Rewind, because loop mode has been selected
-      --frameCount;                                         // Account for the wasted frame
-      continue;                                             // Read the first frame again
+      // --frameCount;                                         // Account for the wasted frame
+      // continue;                                             // Read the first frame again
     }
 
 #ifdef _ENABLE_UI
@@ -1029,8 +1020,17 @@ NvCV_Status App::run() {
     }
 #endif  // _ENABLE_UI
 
-    BAIL_IF_ERR(err = NvCVImage_Transfer(&_srcImg, &_srcGpu, 1.f, _stream, nullptr));
-    BAIL_IF_ERR(err = NvAR_Run(_featureHan));
+    // BAIL_IF_ERR(err = NvCVImage_Transfer(&_srcImg, &_srcGpu, 1.f, _stream, nullptr));
+    // BAIL_IF_ERR(err = NvAR_Run(_featureHan));
+	err = NvCVImage_Transfer(&_srcImg, &_srcGpu, 1.f, _stream, nullptr);
+	if (NVCV_SUCCESS != err) {
+		return err;
+	}
+	err = NvAR_Run(_featureHan);
+	if (NVCV_SUCCESS != err) {
+		return err;
+	}
+
     unsigned isFaceDetected = (_outputBboxes.num_boxes > 0) ? 0xFF : 0;
     if (_cameraNeedsUpdate) {
       err = updateCamera();
@@ -1043,6 +1043,8 @@ NvCV_Status App::run() {
       calibrateExpressionWeights();
     }
     normalizeExpressionsWeights();
+
+	// 顔面描画部分なので一旦なし
     if (_viewMode & VIEW_LM & isFaceDetected) {
       BAIL_IF_ERR(err = overlayLandmarks(&_landmarks.data()->x, _renderHeight, &_srcImg));
     }
@@ -1075,39 +1077,39 @@ NvCV_Status App::run() {
       cv::imshow(_windowTitle, _ocvDstImg);
     }
 
-    int key = cv::waitKey(1);
-    if (key >= 0 && FLAG_debug)
-      printf("Key press '%c' (%02x)\n", ((0x20 <= key && key <= 0x7f) ? key : '#'), key);
-#ifdef _ENABLE_UI
-    if (FLAG_showUI){
-      ui_obj_.stateSetbyCore(_expressions, _expressionZeroPoint, _expressionScale, _expressionExponent, (uncalibrate || calibrate), key);
-    }
-#endif  // _ENABLE_UI
-    if (!FLAG_showUI) {
-      switch (key) {
-      case 27 /*ESC*/:
-      case 'q': case 'Q':       return NvFromAppErr(APP_ERR_CANCEL);  // Quit
-      case 'i':                 _viewMode ^= VIEW_IMAGE;  resizeDst();  break;
-      case 'l':                 _viewMode ^= VIEW_LM;     resizeDst();  break;
-      case 'm':                 _viewMode ^= VIEW_MESH;   resizeDst();  break;
-      case 'n':                 _performCalibration = true;             break;
-      case 'p':                 _viewMode ^= VIEW_PLOT;   resizeDst();  break;
-      case 'f':                 _showFPS = !_showFPS;                   break;
-      case '1':                 initFaceFit();                          break;
-      case '2':                 initMLPExpressions();                   break;
-      case 'L': case CTL('L'):  toggleLandmarkFiltering();              break;
-      case 'N': case CTL('N'):  unCalibrateExpressionWeights();         break;
-      case 'P': case CTL('P'):  togglePoseFiltering();                  break;
-      case 'E': case CTL('E'):  toggleExpressionFiltering();            break;
-      case 'G': case CTL('G'):  toggleGazeFiltering();                  break;
-      case 'C': case CTL('C'):  toggleClosureEnhancement();             break;
-      case 'M': case CTL('M'):  togglePoseMode();                       break;
-      default:
-        if (key < 0) continue;                // No key
-        break;                                // Non-mapped key
-      }
-    }
-  }
+//    int key = cv::waitKey(1);
+//    if (key >= 0 && FLAG_debug)
+//      printf("Key press '%c' (%02x)\n", ((0x20 <= key && key <= 0x7f) ? key : '#'), key);
+//#ifdef _ENABLE_UI
+//    if (FLAG_showUI){
+//      ui_obj_.stateSetbyCore(_expressions, _expressionZeroPoint, _expressionScale, _expressionExponent, (uncalibrate || calibrate), key);
+//    }
+//#endif  // _ENABLE_UI
+//    if (!FLAG_showUI) {
+//      switch (key) {
+//      case 27 /*ESC*/:
+//      case 'q': case 'Q':       return NvFromAppErr(APP_ERR_CANCEL);  // Quit
+//      case 'i':                 _viewMode ^= VIEW_IMAGE;  resizeDst();  break;
+//      case 'l':                 _viewMode ^= VIEW_LM;     resizeDst();  break;
+//      case 'm':                 _viewMode ^= VIEW_MESH;   resizeDst();  break;
+//      case 'n':                 _performCalibration = true;             break;
+//      case 'p':                 _viewMode ^= VIEW_PLOT;   resizeDst();  break;
+//      case 'f':                 _showFPS = !_showFPS;                   break;
+//      case '1':                 initFaceFit();                          break;
+//      case '2':                 initMLPExpressions();                   break;
+//      case 'L': case CTL('L'):  toggleLandmarkFiltering();              break;
+//      case 'N': case CTL('N'):  unCalibrateExpressionWeights();         break;
+//      case 'P': case CTL('P'):  togglePoseFiltering();                  break;
+//      case 'E': case CTL('E'):  toggleExpressionFiltering();            break;
+//      case 'G': case CTL('G'):  toggleGazeFiltering();                  break;
+//      case 'C': case CTL('C'):  toggleClosureEnhancement();             break;
+//      case 'M': case CTL('M'):  togglePoseMode();                       break;
+//      default:
+//        // if (key < 0) continue;                // No key
+//        break;                                // Non-mapped key
+//      }
+//    }
+  // } //無限for文終了
 bail:
   return err;
 }
@@ -1282,6 +1284,7 @@ int ExpressionApp(){
   int nErrs;
   char* argv;
 
+  // 引数に対するエラーハンドリング
   if (0 != (nErrs = ParseMyArgs(1, &argv))) {
     if (HELP_REQUESTED == nErrs)          // If it was  a call for help ...
       BAIL(err, NVCV_SUCCESS);            // ... just exit quietly
@@ -1289,6 +1292,7 @@ int ExpressionApp(){
     BAIL(err, NVCV_ERR_PARSE);
   }
 
+  // faceModelとか指定なければ規定値を定義
   if (FLAG_fitModel.empty())
     FLAG_fitModel = DEFAULT_FACE_MODEL;
   if (FLAG_renderModel.empty())
@@ -1304,7 +1308,7 @@ int ExpressionApp(){
     } while (0);
   }
 
-
+  // Appへの入力に関する処理、動画ファイルかwebカメラか
   if (!FLAG_inFile.empty()) {                 // Input from a video file
     err = app.setInputVideo(FLAG_inFile);
     if (NVCV_SUCCESS != err) {
@@ -1312,12 +1316,14 @@ int ExpressionApp(){
       goto bail;
     }
   } else {                                    // Input from a webcam, #0
-    err = app.setInputCamera(0, FLAG_camRes);
+    err = app.setInputCamera(1, FLAG_camRes);
     if (NVCV_SUCCESS != err) {
       printf("ERROR: cam0: %s\n", app.getErrorStringFromCode(err));
       goto bail;
     }
   }
+
+  // Appからの出力受け取り
   if (!FLAG_outFile.empty()) {                // Output to a file
     err = app.setOutputVideo(FLAG_outFile);
     if (NVCV_SUCCESS != err) {
@@ -1329,11 +1335,13 @@ int ExpressionApp(){
     printf("WARNING: Setting --show since neither --show nor --out were supplied\n");
     FLAG_show = true;
   }
+
   if (FLAG_verbose) printf("Enabled filters = %x\n", FLAG_filter);
   if (FLAG_verbose) printf("Enabled cnn gaze = %x\n", FLAG_gaze);
   err = app.init();
   BAIL_IF_ERR(err);
 
+  // App実行
   err = app.run();
   switch ((int)err) {
     case App::APP_ERR_CANCEL: // The user stopped
