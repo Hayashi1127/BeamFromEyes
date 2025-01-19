@@ -14,6 +14,7 @@ namespace BeamFromEyes::View
 
 		modelDatabasePtr->hpBar.SetSize(windowSizePtr->x/1.5, 40).SetCenter(windowSizePtr->x / 2, 40).draw(uiStatePtr->GetCurrentHP(), uiStatePtr->GetInitialHP());
 		modelDatabasePtr->moistureBar.SetCenter(uiStatePtr->GetPosition()).draw(uiStatePtr->GetCurrentMoisture(), uiStatePtr->GetInitialMoisture());
+		Circle{ uiStatePtr->GetPosition(), 40 }.draw();
 	}
 
 	UIDrawer::UIDrawer(const UIState* uiStatePtr, const ModelDatabase* modelDatabasePtr, const Size* sizePtr)
