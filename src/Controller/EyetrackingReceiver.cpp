@@ -34,7 +34,7 @@ namespace BeamFromEyes::Controller
 		if (MouseR.pressed())
 		{
 			calibIndex = 0;
-			positionCache.clear();
+			positionNormCache.clear();
 		}
 	}
 
@@ -127,11 +127,11 @@ namespace BeamFromEyes::Controller
 		{
 			if (estimateNorm.at(4) < 0.6)
 			{
-				positionNorm.x = 0.05 * estimateNorm.at(4) + estimateNorm.at(3) / 1.05; // Outは軽く見る
+				positionNorm.x = (0.05 * estimateNorm.at(4) + estimateNorm.at(3)) / 1.05; // Outは軽く見る
 			}
 			else
 			{
-				positionNorm.x = 0.05 * estimateNorm.at(3) + estimateNorm.at(4) / 1.05; // Inは軽く見る
+				positionNorm.x = (0.05 * estimateNorm.at(3) + estimateNorm.at(4)) / 1.05; // Inは軽く見る
 			}
 
 			positionNorm.x = 1 - positionNorm.x;
@@ -140,27 +140,27 @@ namespace BeamFromEyes::Controller
 		{
 			if (estimateNorm.at(5) < 0.5)
 			{
-				positionNorm.x += 0.05 * estimateNorm.at(5) + estimateNorm.at(2) / 1.05; // Outは軽く見る
+				positionNorm.x += (0.05 * estimateNorm.at(5) + estimateNorm.at(2)) / 1.05; // Outは軽く見る
 			}
 			else
 			{
-				positionNorm.x += 0.05 * estimateNorm.at(2) + estimateNorm.at(5) / 1.05; // Inは軽く見る
+				positionNorm.x += (0.05 * estimateNorm.at(2) + estimateNorm.at(5)) / 1.05; // Inは軽く見る
 			}
 		}
 
 		// 左目基準で上下どちらを向いているか判定、estimateNormが大きい方を採用
 		if (estimateNorm.at(0) < estimateNorm.at(6)) // 上を向いていると考えられる時
 		{
-			positionNorm.y = estimateNorm.at(6) + estimateNorm.at(7) / 2.0;
+			positionNorm.y = (estimateNorm.at(6) + estimateNorm.at(7)) / 2.0;
 			positionNorm.y = 1 - positionNorm.y;
 		}
 		else                                         // 下を向いていると考えられる時
 		{
-			positionNorm.y += estimateNorm.at(0) + estimateNorm.at(1) / 2.0;
+			positionNorm.y += (estimateNorm.at(0) + estimateNorm.at(1)) / 2.0;
 		}
 
-		positionNorm.x /= 2;
-		positionNorm.y /= 2;
+		//positionNorm.x /= 2;
+		//positionNorm.y /= 2;
 		positionNormCache.push_back(positionNorm);
 
 		// 数フレーム使って補正
