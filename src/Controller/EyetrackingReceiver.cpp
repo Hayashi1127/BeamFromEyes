@@ -36,6 +36,12 @@ namespace BeamFromEyes::Controller
 			calibIndex = 0;
 			positionNormCache.clear();
 		}
+
+		Print << position
+			<< U"                                                                                                                "
+			<< position
+			<< U"                                                                                                                "
+			<< position;
 	}
 
 	Vec2 EyetrackingReceiver::GetPointerPosition() const
@@ -123,44 +129,30 @@ namespace BeamFromEyes::Controller
 
 		// Out基準で左右どちらを向いているか判定、estimateNormが大きい方を採用
 		Float2 positionNorm{ 0, 0 };
+
 		if (estimateNorm.at(5) < estimateNorm.at(4)) // 左を向いていると考えられる時
 		{
-			if (estimateNorm.at(4) < 0.6)
-			{
-				positionNorm.x = (0.05 * estimateNorm.at(4) + estimateNorm.at(3)) / 1.05; // Outは軽く見る
-			}
-			else
-			{
-				positionNorm.x = (0.05 * estimateNorm.at(3) + estimateNorm.at(4)) / 1.05; // Inは軽く見る
-			}
-
-			positionNorm.x = 1 - positionNorm.x;
+			positionNorm.x += 0.7*(1 - (estimateNorm.at(3) + estimateNorm.at(4)) / 2) + ((estimateNorm.at(2) + estimateNorm.at(5)) / 2);
 		}
-		else                                         // 右を向いていると考えられる時
+		else
 		{
-			if (estimateNorm.at(5) < 0.5)
-			{
-				positionNorm.x += (0.05 * estimateNorm.at(5) + estimateNorm.at(2)) / 1.05; // Outは軽く見る
-			}
-			else
-			{
-				positionNorm.x += (0.05 * estimateNorm.at(2) + estimateNorm.at(5)) / 1.05; // Inは軽く見る
-			}
+			positionNorm.x += (1 - (estimateNorm.at(3) + estimateNorm.at(4)) / 2) + 0.7*((estimateNorm.at(2) + estimateNorm.at(5)) / 2);
 		}
 
-		// 左目基準で上下どちらを向いているか判定、estimateNormが大きい方を採用
 		if (estimateNorm.at(0) < estimateNorm.at(6)) // 上を向いていると考えられる時
 		{
-			positionNorm.y = (estimateNorm.at(6) + estimateNorm.at(7)) / 2.0;
-			positionNorm.y = 1 - positionNorm.y;
+			positionNorm.y += (1 - (estimateNorm.at(6) + estimateNorm.at(7)) / 2) + 0.7*((estimateNorm.at(0) + estimateNorm.at(1)) / 2);
 		}
-		else                                         // 下を向いていると考えられる時
+		else
 		{
-			positionNorm.y += (estimateNorm.at(0) + estimateNorm.at(1)) / 2.0;
+			positionNorm.y += 0.7*(1 - (estimateNorm.at(6) + estimateNorm.at(7)) / 2) + ((estimateNorm.at(0) + estimateNorm.at(1)) / 2);
 		}
 
-		//positionNorm.x /= 2;
-		//positionNorm.y /= 2;
+		positionNorm.x /= 1.7;
+		positionNorm.y /= 1.7;
+
+		// Todo:中心付近を重視するように2次関数補完したい
+		
 		positionNormCache.push_back(positionNorm);
 
 		// 数フレーム使って補正
