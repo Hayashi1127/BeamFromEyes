@@ -22,11 +22,11 @@ namespace BeamFromEyes::Controller
 		/// @brief ポインターの場所
 		Point position{ 0, 0 };
 
-		/// @brief positionのキャッシュ
-		Array<Point> positionCache;
+		/// @brief 正規化positionのキャッシュ
+		Array<Float2> positionNormCache;
 
 		/// @brief positionCache何個にするか
-		const int32 positionCacheNum{ 5 };
+		const int32 positionCacheNum{ 10  };
 
 		/// @brief そのフレーム内でマウスを左クリックいているかどうか
 		bool isPressed{ false };
@@ -43,6 +43,7 @@ namespace BeamFromEyes::Controller
 		/// @brief positionを更新
 		void UpdatePosition();
 
+		/// @brief キャリブレーション値と取得したblendShape値からそのblendShapeの重みを0~1で計算
 		float CalcNormPos(float min, float max, float t);
 
 		/// @brief キャリブレーション値と取得したblendShape値から位置座標計算
