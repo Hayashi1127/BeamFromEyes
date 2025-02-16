@@ -36,17 +36,27 @@ namespace BeamFromEyes::Model
 
 		/// @brief 障害物の回転軸
 		Vec3 rotationAxis;
+
+		/// @brief 当たり判定用
+		Sphere collider;
+
+		/// @brief コライダーの大きさ
+		double colliderSize{ 3.0 };
 	public:
 		Obstacle();
 		Obstacle(Vec3 pos);
 		Obstacle(Vec3 pos, Quaternion rot);
 		~Obstacle();
 
+		int32 GetHP() const;
+
 		/// @brief 位置の取得 
 		Vec3 GetPosition() const;
 
 		/// @brief 回転の取得
 		Quaternion GetRotation() const;
+
+		Sphere GetCollider() const;
 
 		/// @brief 障害物が攻撃判定範囲に到達しているか
 		bool IsReached();

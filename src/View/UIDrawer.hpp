@@ -15,6 +15,8 @@ namespace BeamFromEyes::View
 		const ModelDatabase* modelDatabasePtr;
 		const Size* windowSizePtr;
 
+		// 画面に何か文字表示したい時に使う
+		const Font font{ 50 };
 	public:
 		UIDrawer(const UIState* uiStatePtr,const ModelDatabase* modelDatabasePtr, const Size* sizePtr);
 		~UIDrawer();

@@ -5,6 +5,11 @@
 
 namespace BeamFromEyes::Model
 {
+	int32 Obstacle::GetHP() const
+	{
+		return hp;
+	}
+
 	Vec3 Obstacle::GetPosition() const
 	{
 		return position;
@@ -13,6 +18,11 @@ namespace BeamFromEyes::Model
 	Quaternion Obstacle::GetRotation() const
 	{
 		return rotation;
+	}
+
+	Sphere Obstacle::GetCollider() const
+	{
+		return collider;
 	}
 
 	bool Obstacle::IsReached()
@@ -34,25 +44,30 @@ namespace BeamFromEyes::Model
 	{
 		position -= moveSpeed;
 		rotation *= Quaternion::RotationAxis(rotationAxis, rotationSpeed);
+		collider.setPos(position);
 	}
 
 	Obstacle::Obstacle()
 	{
 		position = Vec3{ Random(-xPosLim, xPosLim), Random(-yPosLim, yPosLim), zPosLim };
-
-		moveSpeed = Vec3{ 0, 0, Random(0.5, 1.5) };
+		moveSpeed = Vec3{ 0, 0, Random(2.0, 3.0) };
 		rotationAxis = Vec3{ RandomVec2(), 0};
+		collider = Sphere(position, colliderSize);
 	}
 
 	Obstacle::Obstacle(const Vec3 pos)
 	{
 		position = pos;
+		moveSpeed = Vec3{ 0, 0, Random(2.0, 3.0) };
+		collider = Sphere(position, colliderSize);
 	}
 
 	Obstacle::Obstacle(const Vec3 pos, const Quaternion rot)
 	{
 		position = pos;
+		moveSpeed = Vec3{ 0, 0, Random(2.0, 3.0) };
 		rotation = rot;
+		collider = Sphere(position, colliderSize);
 	}
 
 	Obstacle::~Obstacle()
