@@ -11,8 +11,9 @@ namespace BeamFromEyes::View
 {
 	void ViewManager::Update()
 	{
-		Graphics3D::SetCameraTransform(mainCamera);
-		const ScopedRenderTarget3D target{ renderTexture.clear(backgroundDrawerPtr->GetBackgroundColor()) };
+		Graphics3D::SetCameraTransform(modelManagerPtr->GetCamera());
+		MSRenderTexture renderTexture = modelManagerPtr->GetRenderTexture();
+		const ScopedRenderTarget3D target{ renderTexture.clear(backgroundDrawerPtr->GetBackgroundColor())};
 
 		backgroundDrawerPtr->Draw();
 		obstacleDrawerPtr->Draw();
@@ -32,17 +33,12 @@ namespace BeamFromEyes::View
 
 	ViewManager::ViewManager(const ModelManager* model)
 	{
-		monitorInfos = System::EnumerateMonitors();
-		windowSize = System::GetCurrentMonitor().fullscreenResolution;
-		Window::SetFullscreen(true);
-		Window::SetTitle(U"Beam For Eyes");
-
 		modelManagerPtr = model;
 
 		backgroundDrawerPtr = new BackgroundDrawer(modelManagerPtr->GetBackgroundObjectPtr(), &modelDatabase);
 		obstacleDrawerPtr = new ObstacleDrawer(modelManagerPtr->GetObstaclePtr(), &modelDatabase);
-		uiDrawerPtr = new UIDrawer(modelManagerPtr->GetUIStatePtr(), &modelDatabase, &windowSize);
-		postprocessPtr = new PostProcess(&windowSize);
+		uiDrawerPtr = new UIDrawer(modelManagerPtr->GetUIStatePtr(), &modelDatabase, modelManagerPtr->GetWindowSizePtr());
+		postprocessPtr = new PostProcess(modelManagerPtr->GetWindowSizePtr());
 	}
 
 	ViewManager::~ViewManager()

@@ -23,6 +23,26 @@ namespace BeamFromEyes::Model
 		return uiStatePtr;
 	}
 
+	const Size* ModelManager::GetWindowSizePtr() const
+	{
+		return &windowSize;
+	}
+
+	const MSRenderTexture ModelManager::GetRenderTexture() const
+	{
+		return renderTexture;
+	}
+
+	const BasicCamera3D ModelManager::GetCamera() const
+	{
+		return mainCamera;
+	}
+
+	const int8* ModelManager::GetSceneFlagPtr() const
+	{
+		return &sceneFlag;
+	}
+
 	void ModelManager::Update()
 	{
 		// 自陣に到達した敵について、プレイヤーへの攻撃後削除
@@ -52,6 +72,11 @@ namespace BeamFromEyes::Model
 
 	ModelManager::ModelManager(const ControllerManager* controller)
 	{
+		monitorInfos = System::EnumerateMonitors();
+		windowSize = System::GetCurrentMonitor().fullscreenResolution;
+		Window::SetFullscreen(true);
+		Window::SetTitle(U"Beam For Eyes");
+
 		controllerManagerPtr = controller;
 
 		backgroundObjectPtr = new BackgroundObject();

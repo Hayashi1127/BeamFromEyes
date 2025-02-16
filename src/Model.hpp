@@ -36,6 +36,21 @@ namespace BeamFromEyes::Model
 
 		/// @brief UI描画用情報
 		UIState* uiStatePtr;
+
+		/// @brief ゲーム画面の大きさ
+		Size windowSize{ 1920, 1080 };
+
+		/// @brief ゲーム画面の2D描画先
+		const MSRenderTexture renderTexture{ windowSize, TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+
+		/// @brief ゲーム画面のメインカメラ
+		BasicCamera3D mainCamera{ windowSize, 30_deg, Vec3{ 0, 0, -10} };
+
+		/// @brief スタート(1)、ゲーム(2)、リザルト(3)
+		int8 sceneFlag = 0;
+
+		/// @brief 接続されているモニターの情報
+		Array<MonitorInfo> monitorInfos;
 	public:
 		ModelManager(const ControllerManager* controller);
 		~ModelManager();
@@ -43,5 +58,10 @@ namespace BeamFromEyes::Model
 		const Array<Obstacle>* GetObstaclePtr() const;
 		const UIState* GetUIStatePtr() const;
 		void Update();
+
+		const Size* GetWindowSizePtr() const;
+		const MSRenderTexture GetRenderTexture() const;
+		const BasicCamera3D GetCamera() const;
+		const int8* GetSceneFlagPtr() const;
 	};
 }
