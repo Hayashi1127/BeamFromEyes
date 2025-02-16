@@ -34,8 +34,14 @@ namespace BeamFromEyes::Controller
 		if (MouseR.pressed())
 		{
 			calibIndex = 0;
-			positionCache.clear();
+			positionNormCache.clear();
 		}
+
+		Print << position
+			<< U"                                                                                                                "
+			<< position
+			<< U"                                                                                                                "
+			<< position;
 	}
 
 	Vec2 EyetrackingReceiver::GetPointerPosition() const
@@ -121,66 +127,61 @@ namespace BeamFromEyes::Controller
 			estimateNorm.at(i) = CalcNormPos(calibExpressionDatas[2 * i], calibExpressionDatas[2 * i + 1], eyeExpressions.at(i));
 		}
 
-
 		// Out基準で左右どちらを向いているか判定、estimateNormが大きい方を採用
+		Float2 positionNorm{ 0, 0 };
+
 		if (estimateNorm.at(5) < estimateNorm.at(4)) // 左を向いていると考えられる時
 		{
-			//float norm{ 0.0f };
-			//if (estimateNorm.at(4) < 0.6)
-			//{
-			//	norm = 0.5 * estimateNorm.at(4) + estimateNorm.at(3) / 1.5; // Outは軽く見る
-			//}
-			//else
-			//{
-			//	norm = 0.005 * estimateNorm.at(3) + estimateNorm.at(4) / 1.005; // Inは軽く見る
-			//}
-
-			float norm = estimateNorm.at(3) + estimateNorm.at(4) / 2;
-			position.x = CalcPosition(0, sceneSize.x, 1 - norm);
+			positionNorm.x += 0.7*(1 - (estimateNorm.at(3) + estimateNorm.at(4)) / 2) + ((estimateNorm.at(2) + estimateNorm.at(5)) / 2);
 		}
-		else                                         // 右を向いていると考えられる時
+		else
 		{
-			//float norm{ 0.0f };
-			//if (estimateNorm.at(5) < 0.5)
-			//{
-			//	norm = 0.5 * estimateNorm.at(5) + estimateNorm.at(2) / 1.5; // Outは軽く見る
-			//}
-			//else
-			//{
-			//	norm = 0.005 * estimateNorm.at(2) + estimateNorm.at(5) / 1.005; // Inは軽く見る
-			//}
-
-			float norm = estimateNorm.at(2) + estimateNorm.at(5) / 2;
-			position.x = CalcPosition(0, sceneSize.x, norm);
+			positionNorm.x += (1 - (estimateNorm.at(3) + estimateNorm.at(4)) / 2) + 0.7*((estimateNorm.at(2) + estimateNorm.at(5)) / 2);
 		}
 
-		// 左目基準で上下どちらを向いているか判定、estimateNormが大きい方を採用
 		if (estimateNorm.at(0) < estimateNorm.at(6)) // 上を向いていると考えられる時
 		{
-			float norm = estimateNorm.at(6) + estimateNorm.at(7) / 2.0;
-			position.y = CalcPosition(0, sceneSize.y, 1 - norm);
+			positionNorm.y += (1 - (estimateNorm.at(6) + estimateNorm.at(7)) / 2) + 0.7*((estimateNorm.at(0) + estimateNorm.at(1)) / 2);
 		}
-		else                                         // 下を向いていると考えられる時
+		else
 		{
-			float norm = estimateNorm.at(0) + estimateNorm.at(1) / 2.0;
-			position.y = CalcPosition(0, sceneSize.y, norm);
+			positionNorm.y += 0.7*(1 - (estimateNorm.at(6) + estimateNorm.at(7)) / 2) + ((estimateNorm.at(0) + estimateNorm.at(1)) / 2);
 		}
 
-		if (positionCache.size() >= positionCacheNum)
+		positionNorm.x /= 1.7;
+		positionNorm.y /= 1.7;
+
+		// Todo:中心付近を重視するように2次関数補完したい
+		
+		positionNormCache.push_back(positionNorm);
+
+		// 数フレーム使って補正
+		Float2 smoothedPositionNorm{ 0, 0 };
+		if (positionNormCache.size() >= positionCacheNum)
 		{
-			Point sum{ 0, 0 };
-			int32 weightSum = 0;
-			for (int i = 0; i < positionCacheNum; i++)
+			float weightDiff{ 0.2 };
+			float weight{ 0.2 };
+			float weightSum{ 0 };
+			for (int i = 0; i < positionCacheNum - 1 ; i++)
 			{
-				sum += positionCache[i];
-				//weightSum += i;
+				smoothedPositionNorm += weight * positionNormCache[i];
+				weightSum += weight;
+				weight += weightDiff;
 			}
 
-			position = (position + sum) / (positionCacheNum+1);
-			positionCache.pop_front();
+			smoothedPositionNorm += positionNormCache[positionCacheNum - 1];
+			weightSum += 1;
+
+			smoothedPositionNorm = smoothedPositionNorm / weightSum;
+			positionNormCache.pop_front();
+		}
+		else
+		{
+			smoothedPositionNorm = positionNorm;
 		}
 
-		positionCache.push_back(position);
+		position.x = CalcPosition(0, sceneSize.x, smoothedPositionNorm.x);
+		position.y = CalcPosition(0, sceneSize.y, smoothedPositionNorm.y);
 	}
 
 	float EyetrackingReceiver::CalcNormPos(float calib1, float calib2, float t)
