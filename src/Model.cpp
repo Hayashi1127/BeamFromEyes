@@ -45,18 +45,37 @@ namespace BeamFromEyes::Model
 
 	void ModelManager::Update()
 	{
-		// 自陣に到達した敵について、プレイヤーへの攻撃後削除
-		for (auto it = obstacles.begin() ; it != obstacles.end(); )
+		playerPtr->Update();
+		uiStatePtr->Update();
+
+		const Vec3 p = playerPtr->GetPosition();
+		const Ray ray = mainCamera.screenToRay({ p.x, p.y });
+		for (int i=0 ; i<obstacles.size() ; i++)
 		{
-			if (it->IsReached())
+			const Optional<float> distance = ray.intersects(obstacles.at(i).GetCollider());
+			if (distance.has_value())
 			{
-				// ここに攻撃処理
-				it = obstacles.erase(it);
+				obstacles.at(i).ReceiveDamage(playerPtr->BeamAttack());
+				if (obstacles.at(i).GetHP() <= 0)
+				{
+					obstacles.erase(obstacles.begin() + i);
+				}
+				i--;
+			}
+		}
+
+		// 自陣に到達した敵について、プレイヤーへの攻撃後削除
+		for (int i = 0; i < obstacles.size(); i++)
+		{
+			if (obstacles.at(i).IsReached())
+			{
+				playerPtr->ReceiveDamage(obstacles.at(i).Attack());
+				obstacles.erase(obstacles.begin() + i);
+				i--;
 			}
 			else
 			{
-				it->Update();
-				it++;
+				obstacles.at(i).Update();
 			}
 		}
 
@@ -65,9 +84,6 @@ namespace BeamFromEyes::Model
 		{
 			obstacles.push_back(Obstacle());
 		}
-
-		playerPtr->Update();
-		uiStatePtr->Update();
 	}
 
 	ModelManager::ModelManager(const ControllerManager* controller)
